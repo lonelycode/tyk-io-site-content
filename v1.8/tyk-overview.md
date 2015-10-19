@@ -35,7 +35,7 @@ The Tyk Host Manager
 
 The host manager acts as a bridge between the Tyk gateway and your webserver, it is specialised on NGinX and can do two things:
 
-1. It can generate site definitions for NGinX to point to your upstream API (so your subdomain my-api.example.com will point to an internal upstream tyk installatioN)
+1. It can generate site definitions for NGinX to point to your upstream API (so your subdomain my-api.example.com will point to an internal upstream tyk installation)
 2. It can manage a Tyk installation by hot-reloading Tyk when there is a change registered by the Dashboard, although this use is now deprecated since nodes can hot-reload themselves.
 
 The host manager is not required, it is a utility aplication that can make large, multi-team API deployments dynamic with little to no 
