@@ -7,7 +7,7 @@ date = 2014-07-29T09:31:36Z
     
 +++
 
-Tyk supports importing both API Blueprint and Swagger JSON definitions using the command line. tyk will output the converted file to to stdout. Below are the commands you can use to get Tyk to switch to command mode and generate the respective API definitions for both API Blue[rint and Swagger files.
+Tyk supports importing both API Blueprint and Swagger JSON definitions using the command line. Tyk will output the converted file to to stdout. Below are the commands you can use to get Tyk to switch to command mode and generate the respective API definitions for both API Blue[rint and Swagger files.
 
 ## API Blueprint
 

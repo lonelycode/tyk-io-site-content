@@ -9,7 +9,7 @@ date = 2014-07-29T09:31:36Z
 
 It is often confusing to try and understand how tyk handles URL routing to grant access to upstream APIs, we've made sure that the way Tyk handles inbound requests is as flexible as possible in order to allow for as many styles of configuration as possible. Here are a few scenarios which explain how the gateway can be used to route traffic through the proxy.
 
-Tyk uses something called a `listen_path` in its API Definitions to route requests to the appropriate upstream API, so if you had a microservice architecture with three api's (`api1.someserver.com`, `api2.anotherserver.com` and `pi3.yetanotherserver.com` lets call them), then Tyk could be set up to proxy those three apis in a few ways, here's a few scenarios:
+Tyk uses something called a `listen_path` in its API Definitions to route requests to the appropriate upstream API, so if you had a microservice architecture with three api's (`api1.someserver.com`, `api2.anotherserver.com` and `api3.yetanotherserver.com` lets call them), then Tyk could be set up to proxy those three apis in a few ways, here's a few scenarios:
 
 
 ## Option 1 - Raw Gateway
@@ -26,7 +26,7 @@ This scenario suits a miscroservice architecture well, since the listen paths ar
 
 ## Option 2 - Use the host manager
 
-The host manager is a utility application that can manage NGinX for you, it's sole purpose is to create and destroy nginx configuration (server) blocks and manage an nginx process. since tyk isn;t a web server, it doesn;t handle domain routing but with the host manager, domain routing and configuration can be plugged into the tyk stack and workflow. 
+The host manager is a utility application that can manage NGinX for you, it's sole purpose is to create and destroy nginx configuration (server) blocks and manage an nginx process. since tyk isn't a web server, it doesn't handle domain routing but with the host manager, domain routing and configuration can be plugged into the tyk stack and workflow. 
 
 For example if you have many APIs and want to expose them seperately - the server blocks provide a way to map subdomains or directory locations to upstream, this is what Tyk does by default if you use our docker quickstart script, it would manage the above using `api_slug` values (the listen path here is set to a UUID to ensure there are no routing conflicts), the route now would look like:
 
