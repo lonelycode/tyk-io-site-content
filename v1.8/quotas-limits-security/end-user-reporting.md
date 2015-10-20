@@ -15,7 +15,7 @@ The API call will only work for verified users, full details of the request:
 
 |   **Property**    |   **Description**                  |
 |   -----------     |   ---------------                  |
-|   Resource URL    |   `{api-d}/tyk/rate-limits/`       |
+|   Resource URL    |   `{api-id}/tyk/rate-limits/`       |
 |   Method          |   GET                              |
 |   Type            |   None                             |
 |   Body            |   none                             |
