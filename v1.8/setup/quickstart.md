@@ -46,7 +46,7 @@ For Linux users:
 
 ### Step 4. Create an API
 
-Go to the "APIs" section in your Tyk Cloud Dashboard, and select the green button to create a new API, Change the following fields:
+Go to the "APIs" section in your Tyk Cloud Dashboard, and select the green button to create a new API. Change the following fields:
 
 1. API Name: `HttpBin`
 2. Target: `http://httpbin.org`
@@ -58,9 +58,9 @@ Go to the "APIs" section in your Tyk Cloud Dashboard, and select the green butto
 
 ### Step 5. Create a Policy
 
-Policies enable you to control th quotas and limits of groups of keys that are part of the policy. Policies are integral to using the portal, but can be safelyignored. You can always create keys manually and set their quotas on the key themselves.
+Policies enable you to control the quotas and limits of groups of keys that are part of the policy. Policies are integral to using the portal, but can be safely ignored. You can always create keys manually and set their quotas on the key themselves.
 
-Under the Policies menu item, select "New Policy", you can leave all the defaults as is, except: 
+Under the Policies menu item, select "New Policy". You can leave all the defaults as is, except: 
 
 1. Name the policy "Default"
 2. Select the "HttpBin" API in the access control section and click "Add" so it appears in the list
@@ -72,9 +72,9 @@ Save the policy by clicking the "Create" button.
 
 The API that you defined earlier is active and will work, however you don't have a key yet, you could manually create one in the "Keys" section, but it's bettter to use the portal flow to get your API key as a new developer. 
 
-An API catalogue entry combines a descrioption of your underlying service(s) with a policy that a developer can subscribe to. Since a policy can give access to multiple services this enables you to have a flexible way to create API "Plans" that grant different levels of access to your services.
+An API catalogue entry combines a description of your underlying service(s) with a policy that a developer can subscribe to. Since a policy can give access to multiple services this enables you to have a flexible way to create API "Plans" that grant different levels of access to your services.
 
-Not all APIs are visible to the portal, only the ones you tell it about, so under the "Catalogue" section, select "Add API", on the screen that apears, then:
+Not all APIs are visible to the portal, only the ones you tell it about. So under the "Catalogue" section, select "Add API" then:
 
 1. Select your "Default" policy
 2. Fill in the description fields
@@ -86,7 +86,7 @@ Save the API Catalogue entry by clicking the "Update" button.
 
 If all has worked, you should be able to browse to `https://[your-org-slug].cloud.tyk.io/portal/` and see the portal home page. You should also be able to sign up, log in and enroll for the HttpBin API via the API catalogue.
 
-Once you have enrolled for an API, you'll be given an auth token, you can try it out now. Remember that API ID we saved earlier? you can use it locally now (**make sure to replace the items in angled brackets with your own values**):
+Once you have enrolled for an API, you'll be given an auth token, you can try it out now. Remember that API ID we saved earlier? You can use it locally now (**make sure to replace the items in angled brackets with your own values**):
 
 **Test Command**
 
