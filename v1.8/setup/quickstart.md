@@ -11,7 +11,7 @@ Tyk is very flexible, so we have developed several setup guides depending on wha
 
 This quickstart will give you a whistle-stop tour of the key components of a Tyk setup: The dashboard, the portal and the gateway.
 
-To get you started as fast as possible we're using our Tyk Cloud Hybrid setup as this gives you every component instantly without having to install anything but a single docker container. This will install the Tyk gateway locally, and let you control it from our dashboard managmeent interface as well as experiment with the portal.
+To get you started as fast as possible we're using our Tyk Cloud Hybrid setup as this gives you every component instantly without having to install anything but a single Docker container. This will install the Tyk gateway locally, and let you control it from our dashboard managmeent interface as well as experiment with the portal.
 
 **If you want to install the full stack locally, [click here](../docker/), otherwise, follow the steps below:**
 
@@ -22,7 +22,7 @@ Go to our Tyk Cloud Signup page, and [sign up for an account](https://cloud.tyk.
 ### Step 2. Get your credentials
 
 1. Go to https://admin.cloud.tyk.io and login with your new details
-2. Click "Users" and select your name, you will see your RPC credentials, take not of these:
+2. Click "Users" and select your name, you will see your RPC credentials, take note of these:
 
 
 	![RPC Creds](/imgs/quickstart-creds.png)
@@ -30,7 +30,7 @@ Go to our Tyk Cloud Signup page, and [sign up for an account](https://cloud.tyk.
 
 ### Step 3. Get Tyk installed
 
-Next you will need to run our start script, it's very straightforward, simply run the command below in a terminal that can see your docker daemon:
+Next you will need to run our start script, it's very straightforward, simply run the command below in a terminal that can see your Docker daemon:
 
 For OSX Users, open a CLI that can access the `docker` command:
 
