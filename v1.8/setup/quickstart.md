@@ -11,7 +11,7 @@ Tyk is very flexible, so we have developed several setup guides depending on wha
 
 This quickstart will give you a whistle-stop tour of the key components of a Tyk setup: The dashboard, the portal and the gateway.
 
-To get you started as fast as possible we're using our Tyk Cloud Hybrid setup as this gives you every component instantly without having to install anything but a single docker container. This will install the Tyk gateway locally, and let you control it from our dashboard managmeent interface as well as experiment with the portal.
+To get you started as fast as possible we're using our Tyk Cloud Hybrid setup as this gives you every component instantly without having to install anything but a single Docker container. This will install the Tyk gateway locally, and let you control it from our dashboard managmeent interface as well as experiment with the portal.
 
 **If you want to install the full stack locally, [click here](../docker/), otherwise, follow the steps below:**
 
@@ -22,7 +22,7 @@ Go to our Tyk Cloud Signup page, and [sign up for an account](https://cloud.tyk.
 ### Step 2. Get your credentials
 
 1. Go to https://admin.cloud.tyk.io and login with your new details
-2. Click "Users" and select your name, you will see your RPC credentials, take not of these:
+2. Click "Users" and select your name, you will see your RPC credentials, take note of these:
 
 
 	![RPC Creds](/imgs/quickstart-creds.png)
@@ -30,7 +30,7 @@ Go to our Tyk Cloud Signup page, and [sign up for an account](https://cloud.tyk.
 
 ### Step 3. Get Tyk installed
 
-Next you will need to run our start script, it's very straightforward, simply run the command below in a terminal that can see your docker daemon:
+Next you will need to run our start script, it's very straightforward, simply run the command below in a terminal that can see your Docker daemon:
 
 For OSX Users, open a CLI that can access the `docker` command:
 
@@ -46,7 +46,7 @@ For Linux users:
 
 ### Step 4. Create an API
 
-Go to the "APIs" section in your Tyk Cloud Dashboard, and select the green button to create a new API, Change the following fields:
+Go to the "APIs" section in your Tyk Cloud Dashboard, and select the green button to create a new API. Change the following fields:
 
 1. API Name: `HttpBin`
 2. Target: `http://httpbin.org`
@@ -58,9 +58,9 @@ Go to the "APIs" section in your Tyk Cloud Dashboard, and select the green butto
 
 ### Step 5. Create a Policy
 
-Policies enable you to control th quotas and limits of groups of keys that are part of the policy. Policies are integral to using the portal, but can be safelyignored. You can always create keys manually and set their quotas on the key themselves.
+Policies enable you to control the quotas and limits of groups of keys that are part of the policy. Policies are integral to using the portal, but can be safely ignored. You can always create keys manually and set their quotas on the key themselves.
 
-Under the Policies menu item, select "New Policy", you can leave all the defaults as is, except: 
+Under the Policies menu item, select "New Policy". You can leave all the defaults as is, except: 
 
 1. Name the policy "Default"
 2. Select the "HttpBin" API in the access control section and click "Add" so it appears in the list
@@ -72,9 +72,9 @@ Save the policy by clicking the "Create" button.
 
 The API that you defined earlier is active and will work, however you don't have a key yet, you could manually create one in the "Keys" section, but it's bettter to use the portal flow to get your API key as a new developer. 
 
-An API catalogue entry combines a descrioption of your underlying service(s) with a policy that a developer can subscribe to. Since a policy can give access to multiple services this enables you to have a flexible way to create API "Plans" that grant different levels of access to your services.
+An API catalogue entry combines a description of your underlying service(s) with a policy that a developer can subscribe to. Since a policy can give access to multiple services this enables you to have a flexible way to create API "Plans" that grant different levels of access to your services.
 
-Not all APIs are visible to the portal, only the ones you tell it about, so under the "Catalogue" section, select "Add API", on the screen that apears, then:
+Not all APIs are visible to the portal, only the ones you tell it about. So under the "Catalogue" section, select "Add API" then:
 
 1. Select your "Default" policy
 2. Fill in the description fields
@@ -86,7 +86,7 @@ Save the API Catalogue entry by clicking the "Update" button.
 
 If all has worked, you should be able to browse to `https://[your-org-slug].cloud.tyk.io/portal/` and see the portal home page. You should also be able to sign up, log in and enroll for the HttpBin API via the API catalogue.
 
-Once you have enrolled for an API, you'll be given an auth token, you can try it out now. Remember that API ID we saved earlier? you can use it locally now (**make sure to replace the items in angled brackets with your own values**):
+Once you have enrolled for an API, you'll be given an auth token, you can try it out now. Remember that API ID we saved earlier? You can use it locally now (**make sure to replace the items in angled brackets with your own values**):
 
 **Test Command**
 
