@@ -38,7 +38,7 @@ In a shel that can see your docker instance, run:
 Use the credentials given to you by the script to log into the dashboard. Congratulatons! tyk is now up and
 running on your machine :-)
 
-But it doesn't mean much if you want to sctually want to test-drive all the features, so lets set up a portal and manage a basic API...
+But it doesn't mean much if you want to actually want to test-drive all the features, so lets set up a portal and manage a basic API...
 
 ## Step 4 - Create a Portal and your first API
 
