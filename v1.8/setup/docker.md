@@ -38,7 +38,7 @@ In a shel that can see your docker instance, run:
 Use the credentials given to you by the script to log into the dashboard. Congratulatons! tyk is now up and
 running on your machine :-)
 
-But it doesn't mean much if you want to actually want to test-drive all the features, so lets set up a portal and manage a basic API...
+But it doesn't mean much if you actually want to test-drive all the features, so lets set up a portal and manage a basic API...
 
 ## Step 4 - Create a Portal and your first API
 
@@ -80,7 +80,7 @@ Not all APIs are visible to the portal, only the ones you tell it about, so unde
 
 1. Select your "Default" policy
 2. Fill in the description fields
-3. Ensure the "Enable this APi" checkbox is checked
+3. Ensure the "Enable this API" checkbox is checked
 
 Save the API Catalogue entry by clicking the "Update" button.
 
@@ -122,4 +122,4 @@ That's it! You can now experiment with the various transforms, options and metho
 
 ### The "Your Portal" link isn't working
 
-Tyk tries to guess teh right IP address for the portal and the Tyk gateway instance, however this is usully not what you want. The way to set this correctly is to add a `hostname` entry in the `tyk_analytics.conf` file. For the demo, if you have set up `tyk.docker` to point at your docker host then all should work.
+Tyk tries to guess the right IP address for the portal and the Tyk gateway instance, however this is usully not what you want. The way to set this correctly is to add a `hostname` entry in the `tyk_analytics.conf` file. For the demo, if you have set up `tyk.docker` to point at your docker host then all should work.
