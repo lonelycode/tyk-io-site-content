@@ -9,11 +9,11 @@ date = 2014-07-29T10:58:44Z
 
 ### Overview
 
-It is possible to script your own event handlers for the [key tyk events](event-handlers/event-handlers/). You can add these events the same way you add other event handlers (e.g. the webhook), they are executed asynchronously so you don't need to worry about them blocking.
+It is possible to script your own event handlers for the [key Tyk events](event-handlers/event-handlers/). You can add these events the same way you add other event handlers (e.g. the webhook), they are executed asynchronously so you don't need to worry about them blocking.
 
 It is important to note that unlike Tyk JSVM middleware, Tyk JSVM event handlers execute in a *global* JavaScript Environment, this means that if you have the same event handler name that contains slightly different code across two APIs, only one of them will execute, as the other will be overridden when loaded.
 
-Tyk JSVM event handlers have access to the tyk JSVM API, which gives access to the session object store, and enables the ability for making HTTP calls outside of the Tyk environment, this is particuarly useful if you want to interface with another API with a complex request/response cycle.
+Tyk JSVM event handlers have access to the Tyk JSVM API, which gives access to the session object store, and enables the ability for making HTTP calls outside of the Tyk environment, this is particuarly useful if you want to interface with another API with a complex request/response cycle.
 
 The Tyk [JSVM API is detailed here](plugins/jsvm-api/).
 
@@ -25,12 +25,12 @@ Creating an event handler is very similar to creating middleware, simply invoke 
     var sampleHandler = new TykJS.TykEventHandlers.NewEventHandler({});
 
     sampleHandler.NewHandler(function(event, context) {
-        // You can log to Tyk console output by calloing the built-in log() function:
+        // You can log to Tyk console output by calling the built-in log() function:
         log("This handler does nothing, but this will appear in your terminal")
 
         return
     });
-    
+
 A handler consists only of a function that accepts a single variable called `event` and `context`. the event object is the same as is used by other event handlers and has the following structure:
 
     /* The Event object:
@@ -51,13 +51,13 @@ An event handler has no return value, however it can interact with the outside w
 
 #### The `context` variable
 
-In order to provide more context around an event, tyk injects a context object into your event handler, this gives more information around the Key, such as the Org and API ID of the requerst in order to interact better with the Tyk REST API functions:
+In order to provide more context around an event, Tyk injects a context object into your event handler, this gives more information around the Key, such as the Org and API ID of the request in order to interact better with the Tyk REST API functions:
 
     type JSVMContextGlobal struct {
         APIID string
         OrgID string
     }
-    
+
 This can be used as follows:
 
     // Use the TykGetKeyData function to retrieve a session from the session store, use the context variable to give the APIID for the key.
@@ -66,8 +66,8 @@ This can be used as follows:
 
 ### Hooking up a dynamic event handler
 
-Adding a dynamic event hanler to your API is the same as adding a regular event handler, however there is now a new type: `eh_dynamic_handler`, it can be invoked and configured as follows:
-    
+Adding a dynamic event handler to your API is the same as adding a regular event handler, however there is now a new type: `eh_dynamic_handler`, it can be invoked and configured as follows:
+
     /* test_app.json */
     ...
     "event_handlers": {
@@ -84,9 +84,7 @@ Adding a dynamic event hanler to your API is the same as adding a regular event 
         }
     },
     ...
-    
-The key differntiators here are the `handler_meta`configuration section, here there are two fields: `name` and `path`, similarly to dynamic middleware, the name represents the unique name of your middleware object, and the path is the relative path to the file (it can be absolute).
 
-The JS files are loaded on API reload into the global JSVM. If a hot-reload event ccurs, the global JSVM is re-set and files are re-loaded. This could cause event handlers that are currently executing to get abandoned. This is a measured risk and should not cause instability, however it should be noted that because of this, in an environment where reloads occur frequently, there is  risk that event handler may not fire correctly.
+The key differentiators here are the `handler_meta`configuration section, here there are two fields: `name` and `path`, similarly to dynamic middleware, the name represents the unique name of your middleware object, and the path is the relative path to the file (it can be absolute).
 
-
+The JS files are loaded on API reload into the global JSVM. If a hot-reload event occurs, the global JSVM is re-set and files are re-loaded. This could cause event handlers that are currently executing to get abandoned. This is a measured risk and should not cause instability, however it should be noted that because of this, in an environment where reloads occur frequently, there is  risk that event handler may not fire correctly.

@@ -7,9 +7,9 @@ date = 2014-07-29T10:56:22Z
     weight = -200
 +++
 
-Service discovery is a very useful feature for when you have a dynamically changing upstream service set, for example, you have ten docker containers taht are running the same service, and you are load balancing between them, if one or more fail, most likely a new service will spawn but on a different IP address. Now the Gateway would need to either be manually reconfigured, or, more appropriately, detect the failure and reconfigure itself.
+Service discovery is a very useful feature for when you have a dynamically changing upstream service set, for example, you have ten docker containers that are running the same service, and you are load balancing between them, if one or more fail, most likely a new service will spawn but on a different IP address. Now the Gateway would need to either be manually reconfigured, or, more appropriately, detect the failure and reconfigure itself.
 
-This is what the service discovery module does. 
+This is what the service discovery module does.
 
 Service discovery is configured on a per-API basis, and is set up in the API Object under the `proxy` section:
 
@@ -72,7 +72,7 @@ In this case, the data actually lives within this string-encoded JSON object, so
 
 ### `service_discovery.parent_data_path`
 
-This is the namespace of the where to find the nested value, in the above example, it would be `node.value`. You would then change the `data_path` setting to be `hostname`, since this is where the host name data resides in the JSON string. Tyk automatically assumes taht the data_path in this case is in a string-encoded JSOn object and will try to deserialise it. 
+This is the namespace of the where to find the nested value, in the above example, it would be `node.value`. You would then change the `data_path` setting to be `hostname`, since this is where the host name data resides in the JSON string. Tyk automatically assumes that the data_path in this case is in a string-encoded JSOn object and will try to deserialise it.
 
 Tyk will decode the JSON string and then apply the `data_path` namespace to that object in order to find the value.
 
@@ -84,11 +84,10 @@ In the above example, the `port_data_path` would be `port`.
 
 ### `service_discovery.use_target_list`
 
-If you are using load_balancing, set this value to true and tyk will treat the data path as a list and inject it into the target list of your API Definition.
+If you are using load_balancing, set this value to true and Tyk will treat the data path as a list and inject it into the target list of your API Definition.
 
 ### `service_discovery.cache_timeout`
 
-Tyk caches target data from a discovery service, in order to make this dynamic you can set a cache value when the data expires and new data is loaded. Setting it too low will cause tyk to call the SD service too often, setting it too high could mean that failures are not recovered from quickly
+Tyk caches target data from a discovery service, in order to make this dynamic you can set a cache value when the data expires and new data is loaded. Setting it too low will cause Tyk to call the SD service too often, setting it too high could mean that failures are not recovered from quickly
 
-We recommend using the SD module in conjunction with the circuit breaker features, as this makes detetion and discovery of failures at th gateway level much more dynamic and responsive.
-
+We recommend using the SD module in conjunction with the circuit breaker features, as this makes detection and discovery of failures at the gateway level much more dynamic and responsive.

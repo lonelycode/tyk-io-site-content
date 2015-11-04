@@ -6,7 +6,7 @@ date = 2014-07-29T10:57:15Z
     parent = "limits"
 +++
 
-Tyk supports the concept of access control. Access control is managed via three key settings in a user session. 
+Tyk supports the concept of access control. Access control is managed via three key settings in a user session.
 In order to be fully clear on how Tyk handles access control, it's worth looking at the key settings that go into a user session
 object. A full description of each of the options can be found in the [REST API documentation](http://localhost:1313/rest-api/overview).
 
@@ -34,18 +34,18 @@ Tyk will store each access key as a record in Redis, this key will will have cer
         "hmac_enabled": false,
         "hmac_string": ""
     }
-    
+
 The key elements that manage access control are the fields:
 
 - `allowance` & `rate` - these should be set to the same value, these are the users allowance during a period as set by `per`
-- `per` - The time in seconds where a rate limit is appled
+- `per` - The time in seconds where a rate limit is applied
 - `expires` - The date when the key expires
 - `quota_max` - The usage quota for the user
 - `quota_renews` - the Unix timestamp when the quota is renewed
 - `quota_renewal_rate` - The time, in seconds, of when the quota gets renewed (e.g. the quote renews ever x days expressed in seconds)
 
-These settings can be used exclusively or in conjunction with one another to create usage patterns and tiers of access for your users. Each 
-time a request is processed by Tyk, the session will be updated with an updated quota (if used), and updated throttling rate depending on the 
+These settings can be used exclusively or in conjunction with one another to create usage patterns and tiers of access for your users. Each
+time a request is processed by Tyk, the session will be updated with an updated quota (if used), and updated throttling rate depending on the
 time-frame specified.
 
 Creating new keys is done by POSTing an object such as the above to the Tyk create key API endpoint.
@@ -74,7 +74,7 @@ In order to set a quota for a user:
 
 1. Ensure that `quota_max` is set to the maximum amount of requests that a user is allowed to make i na time period
 2. Ensure `quota_reamining` is set to the same value as `quota_max`, this is the value that will decrement on each request (failed or successful)
-3. Set the `quota_renewal_rate` to the value, in seconds, of when the quota should renew. For example, if you owuld like it to renew every 30 days, you would have `2592000` seconds (`((60*60) * 24) * 30 = 2592000`)
+3. Set the `quota_renewal_rate` to the value, in seconds, of when the quota should renew. For example, if you would like it to renew every 30 days, you would have `2592000` seconds (`((60*60) * 24) * 30 = 2592000`)
 
 To set an unlimited quota, set `quota_max` to `-1`
 
@@ -83,11 +83,11 @@ To set an unlimited quota, set `quota_max` to `-1`
 If you set a data in the key expiry field, when the key is created (or updated), the expiry time is also set as the keys deletion time from Redis. If a key has expired
 tyk will no longer let requests through on this key.
 
-Tyk manages timestamps in the Unix timestamp format - this means that when a date is set for expiry it should be converted to a unix timestamp 
-(usually a large integer) which shows seconds since the epoch (Jan 1 1970). This format is used because it allows for faster processing and takes 
+Tyk manages timestamps in the Unix timestamp format - this means that when a date is set for expiry it should be converted to a unix timestamp
+(usually a large integer) which shows seconds since the epoch (Jan 1 1970). This format is used because it allows for faster processing and takes
 into account timezone differences without needing localisation.
 
-Key sessions are created and updated using the Tyk REST API, in order to set the expiry date for a key, update the `expires` value with the timestamp of 
-when the ky should expire.
+Key sessions are created and updated using the Tyk REST API, in order to set the expiry date for a key, update the `expires` value with the timestamp of
+when the key should expire.
 
 Leave this field empty for it never to expire.

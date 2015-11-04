@@ -31,11 +31,11 @@ In a shel that can see your docker instance, run:
 	git clone git@github.com:lonelycode/tyk_quickstart.git
 	cd tyk_quickstart
 	docker-compose up -d tyk_nginx
-	./setup.sh 
+	./setup.sh
 
 ## Step 3 - Log in
 
-Use the credentials given to you by the script to log into the dashboard. Congratulatons! tyk is now up and
+Use the credentials given to you by the script to log into the dashboard. Congratulatons! Tyk is now up and
 running on your machine :-)
 
 But it doesn't mean much if you actually want to test-drive all the features, so lets set up a portal and manage a basic API...
@@ -64,7 +64,7 @@ Save the API.
 
 ### Create a Policy
 
-Under the Policies menu item, select "New Policy", you can leave all the defaults as is, except: 
+Under the Policies menu item, select "New Policy", you can leave all the defaults as is, except:
 
 1. Name the policy "Default"
 2. Select the "HttpBin" API in the access control section and click "Add" so it appears in the list
@@ -74,9 +74,9 @@ Save the policy by clicking the "Create" button.
 
 ### Publish the API to the portal
 
-The API that you defined earlier is active and will work, however you don't have a key yet, you could manually create one in the "Keys" section, but it's bettter to use the portal flow to get your API key as a new developer. 
+The API that you defined earlier is active and will work, however you don't have a key yet, you could manually create one in the "Keys" section, but it's better to use the portal flow to get your API key as a new developer.
 
-Not all APIs are visible to the portal, only the ones you tell it about, so under the "Catalogue" section, select "Add API", on the screen that apears, then:
+Not all APIs are visible to the portal, only the ones you tell it about, so under the "Catalogue" section, select "Add API", on the screen that appears, then:
 
 1. Select your "Default" policy
 2. Fill in the description fields
@@ -100,7 +100,7 @@ Or you can use the directory-based URL format:
 
 	$ curl --header "authorization: {YOUR KEY}" http://testorg.tyk.docker:8888/test-api/get
 
-**Sample Response** 
+**Sample Response**
 
 	{
 	  "args": {},
@@ -122,4 +122,4 @@ That's it! You can now experiment with the various transforms, options and metho
 
 ### The "Your Portal" link isn't working
 
-Tyk tries to guess the right IP address for the portal and the Tyk gateway instance, however this is usully not what you want. The way to set this correctly is to add a `hostname` entry in the `tyk_analytics.conf` file. For the demo, if you have set up `tyk.docker` to point at your docker host then all should work.
+Tyk tries to guess the right IP address for the portal and the Tyk gateway instance, however this is usually not what you want. The way to set this correctly is to add a `hostname` entry in the `tyk_analytics.conf` file. For the demo, if you have set up `tyk.docker` to point at your docker host then all should work.

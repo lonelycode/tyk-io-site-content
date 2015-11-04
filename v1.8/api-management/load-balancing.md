@@ -6,7 +6,7 @@ date = 2014-07-29T10:56:22Z
     parent = "management"
 +++
 
-As of v1.8, Tyk supports naive round-robin load-balancing in it's proxy. This means that tyk will rotate requests through a list of target hosts as requests come in. This can bevery useful in microservice architectures where clusters of specialised services are launched for high availability.
+As of v1.8, Tyk supports naive round-robin load-balancing in it's proxy. This means that Tyk will rotate requests through a list of target hosts as requests come in. This can be very useful in microservice architectures where clusters of specialised services are launched for high availability.
 
 Setting up load balancing is done on an API by API basis, and is defined in the API Definition file/object:
 

@@ -14,14 +14,14 @@ It is possible to modify inbound and outbound body data and header information o
 Tyk enables you to modify header information before it leaves the proxy and is passed to your upstram API or when a response is proxied back to the client. This can be very useful in cases where you have an upstream API that
 has a single authentication key, and you want to add multi-user access to it without modifying it or adding clunky authentication methods to it to support new users.
 
-Tyk alo supports the abaility to use information from the key or token holder in the transform (for example, converting a Tyk-generated token into a user id that your aplpication can use).
+Tyk also supports the ability to use information from the key or token holder in the transform (for example, converting a Tyk-generated token into a user id that your application can use).
 
 Here is an example scenario:
 
-You have an APi called WidgetsAPI, that takes an x-widgets-secret header to allow access, this is an internal API used by your teams but you want to expose it to your customers
+You have an API called WidgetsAPI, that takes an x-widgets-secret header to allow access, this is an internal API used by your teams but you want to expose it to your customers
 and charge them for access.
 
-You could either modify the APi and add a whole user, key and access management system, or you could use Tyk to inject this header for you.
+You could either modify the API and add a whole user, key and access management system, or you could use Tyk to inject this header for you.
 
 Using Tyk, you would set up your API Definition with these additions to the extended_paths.transform_headers filed:
 
@@ -54,12 +54,12 @@ Using Tyk, you would set up your API Definition with these additions to the exte
                 }
             ]
     }
-    
+
 Now Tyk keys that you create with an Access Definition rule that is set to this API and version, can have quotas, throttling and access checks applied without needing to add any new code or functionality to your existing API.
 
 #### Using Meta Data from a key object in header transforms
 
-It is possible to inject information that is carried within the user session object into the header space as well. Each token or key has an attached session object which contains a `meta_data` field, this is a key/value map that allows for dynamic middleware and other compoennts to intelligently act on identity information from the inbound request without exposing it.
+It is possible to inject information that is carried within the user session object into the header space as well. Each token or key has an attached session object which contains a `meta_data` field, this is a key/value map that allows for dynamic middleware and other components to intelligently act on identity information from the inbound request without exposing it.
 
 To use this data in your header transform simply access the special `$tyk_meta` namespace, here is a working example:
 
@@ -84,10 +84,10 @@ To use this in your header transform, your API definition path would be:
 
 ### Modifying body data
 
-Sometimes, you may also be exposing an older API, or one that uses a legacy structure for input data, or, you are actually creating a new API schema and models that are cleaner, that 
-you want to apply to your existing APi without modifying it (it may have many legacy clients that cannot be upgraded).
+Sometimes, you may also be exposing an older API, or one that uses a legacy structure for input data, or, you are actually creating a new API schema and models that are cleaner, that
+you want to apply to your existing API without modifying it (it may have many legacy clients that cannot be upgraded).
 
-As of Tyk 1.5 it is possible to modify inbound JSON requests (XML is not yet supported) using a golang template. Tyk will unmarshal the JSOn data into a data structure, and then make
+As of Tyk 1.5 it is possible to modify inbound JSON requests (XML is not yet supported) using a golang template. Tyk will unmarshal the JSON data into a data structure, and then make
 that data available to the template in dot-notation. Here is an example to illustrate:
 
 Assume your inbound date structure is as follows:

@@ -7,22 +7,22 @@ date = 2014-07-29T10:54:19Z
     weight = -300
 +++
 
-Getting started with tyk is a straightforward task - head on over to our downloads page and download the binary that is 
-most appropriate for your distribution. Currently the builds ae available for Linux on amd64, i386 and ARM architectures. Only amd64 have been thoroughly tested.
+Getting started with Tyk is a straightforward task - head on over to our downloads page and download the binary that is
+most appropriate for your distribution. Currently builds are available for Linux on amd64, i386 and ARM architectures. Only amd64 has been thoroughly tested.
 
 ## Step 1: Download the binaries
 
 ### Redis
-Before anything will work, please install Redis - this can either be on the same system, or on another server. If you just want to try out Tyk, the quickest thing 
+Before anything will work, please install Redis - this can either be on the same system, or on another server. If you just want to try out Tyk, the quickest thing
 to do is just install Redis, instructions on how to do this can be found on the [Redis documentation pages](http://redis.io/topics/quickstart). You may
-also be able to install redis via your package manager.
+also be able to install Redis via your package manager.
 
-### Debian packages 
+### Debian packages
 
-If you are using one of our debian packages - you can use `dpkg` to install the application using:
+If you are using one of our Debian packages - you can use `dpkg` to install the application using:
 
     martin@vyr ~/> sudo dpkg -i tyk.linux.amd64_1.6-1_all.deb
-    
+
 This will install the `tyk` binary to your /usr/local/bin directory and place all configuration files into `/etc/tyk`
 
 Skip on to step 2 now to ensure that things are configured correctly to get up and running.
@@ -38,26 +38,26 @@ files in the `/etc/tyk` folder.
 
 #### Step 1b (For tarballs only)
 
-Since tyk expects to find templates and app configurations in the `/etc/tyk` folder, and if this is not set up (or you don't have access to it), 
+Since tyk expects to find templates and app configurations in the `/etc/tyk` folder, and if this is not set up (or you don't have access to it),
 you can override those settings.
 
 First edit the tyk.conf file and find the entries that read:
 
     template_path: "/etc/tyk/templates"
-    
+
 And replace that with:
 
     "template_path": "templates",
     "app_path": "apps",
-    
+
 This will get Tyk to look in the local directory for the template and app files (these folders should come with the tarball).
 Note you can set this to any directory you like.
 
 ### Step 2: Initial configuration
 
-The main things that need ot be set up is to tell Tyk how to find the Redis instance, and secondly, what to proxy. Tyk ships with 
+The main things that need to be set up is to tell Tyk how to find the Redis instance, and secondly, what to proxy. Tyk ships with
 an example configuration file - and to get up and running as quickly as possible - you only need to modify the following sections
-to point at your redis instance, this is in the 'storage' section:
+to point at your Redis instance, this is in the 'storage' section:
 
 Modify the `storage` section with your Redis details:
 
@@ -68,7 +68,7 @@ Modify the `storage` section with your Redis details:
         "username": "",
         "password": ""
     },
-    
+
 ### Step 3: Define an API
 
 Tyk stores APIs in things called Definitions - these are either stored in MongoDB (more on that elsewhere) or as flat-files on disk. If you open up
@@ -106,7 +106,7 @@ Tyk stores APIs in things called Definitions - these are either stored in MongoD
         }
     }
 
-To get things started quickly, lets create an open-access API (Keyless), in order to do this we need to set 
+To get things started quickly, lets create an open-access API (Keyless), in order to do this we need to set
 the `use_keyless` flag to true, and clear the `auth` section:
 
     {
@@ -148,21 +148,21 @@ the `use_keyless` flag to true, and clear the `auth` section:
         }
     }
 
-The most crucial part of an app config to edit is the `target_url`, in our example it is set to: `http://jive.ly`, you can 
-leave it like that if you want, but making requests to will basically cause you to query our company home page! 
-For the purposes of this setup guide, let's set this to: `http://httpbin.org/`, httpbin is a breat service that will 
+The most crucial part of an app config to edit is the `target_url`, in our example it is set to: `http://jive.ly`, you can
+leave it like that if you want, but making requests to will basically cause you to query our company home page!
+For the purposes of this setup guide, let's set this to: `http://httpbin.org/`, httpbin is a great service that will
 echo back your request parameters as a JSON object and has a variety of endpoints that can be tested.
 
-You will also have noticed we added a new parameter to the `proxy` section: `strip_listen_path` this prevents requests to 
+You will also have noticed we added a new parameter to the `proxy` section: `strip_listen_path` this prevents requests to
 be proxied with the listen path intact (i.e. in this case `/quickstart/get/this` will be tripped back to `/get/this`)
- 
+
 ### Step 4: Run Tyk
 
 Running tyk is very simple, simply invoke it from the command line like so:
 
     martin@vyr ~/> tyk
-    
-if you are runnig form a tarball or have installed into a different directory - specify the configuration file that we set up above:
+
+if you are running form a tarball or have installed into a different directory - specify the configuration file that we set up above:
 
     martin@vyr ~/tyk/> ./tyk --conf=tyk.conf
 
@@ -195,23 +195,23 @@ If everything has ben configured correctly, you should now see some output that 
 	INFO[0000] Loading Middleware
 	INFO[0000] Loading policies
 	INFO[0000] No policy record name defined, skipping...
-    
+
 Don't worry about all those Redis connections, Tyk uses a large pool to ensure that we can quickly get data in an out of Redis and limit request round-trip time.
 
 You should now be able to run the following and get a JSON response back form the httpbin service:
 
     martin@vyr ~/> curl http://localhost:5000/quickstart/get
     {
-      "args": {}, 
+      "args": {},
       "headers": {
-        "Accept": "*/*", 
-        "Accept-Encoding": "gzip", 
-        "Connection": "close", 
-        "Host": "httpbin.org", 
-        "User-Agent": "curl/7.35.0", 
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip",
+        "Connection": "close",
+        "Host": "httpbin.org",
+        "User-Agent": "curl/7.35.0",
         "X-Request-Id": "22fa662e-0146-4cce-809b-137923946891"
-      }, 
-      "origin": "x.x.x.x, x.x.x.x", 
+      },
+      "origin": "x.x.x.x, x.x.x.x",
       "url": "http://httpbin.org/get"
     }
 

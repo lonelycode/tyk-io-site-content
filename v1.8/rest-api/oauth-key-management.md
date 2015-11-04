@@ -4,7 +4,7 @@ title = "OAuth key management"
 date = 2014-07-29T10:58:44Z
 [menu.sidebar_v1_8]
     parent = "rest"
-    
+
 +++
 
 ### Create new OAuth Client
@@ -26,12 +26,12 @@ Any OAuth keys must be generated with the help of a client ID, these need to be 
     Host: localhost:5000
     x-tyk-authorization: 352d20ee67be67f6340b4c0605b044b7
     Cache-Control: no-cache
-    
+
     {
         "api_id": "25348e8cf157409b52e39357fd9578f1",
         "redirect_uri": "http://client-app.com/oauth-redirect/"
     }
-    
+
 #### Sample Response
 
     {
@@ -117,7 +117,7 @@ endpoint for your application to generate these codes and redirect the end-user 
 - `response_type`: Should be provided by requesting client as part of authorisation request, this should be either `code` or `token` depending on the methods you have specified for the API
 - `client_id`: Should be provided by requesting client as part of authorisation request. The Client ID that is making the request
 - `redirect_uri`: Should be provided by requesting client as part of authorisation request. Must match with the record stored with Tyk
-- `key_rules`: A string representation of a Session Object (form-encoded). *This should be provided by your application in order to apply any quotas or rules ot the key*
+- `key_rules`: A string representation of a Session Object (form-encoded). *This should be provided by your application in order to apply any quotas or rules to the key*
 
 ### Sample request
 
@@ -126,7 +126,7 @@ endpoint for your application to generate these codes and redirect the end-user 
     X-Tyk-Authorization: 352d20ee67be67f6340b4c0605b044b7
     Cache-Control: no-cache
     Content-Type: application/x-www-form-urlencoded
-    
+
     response_type=code&client_id=21e2baf424674f6461faca6d45285bbb&redirect_uri=http%3A%2F%2Foauth.com%2Fredirect&key_rules=%7B+++++%22allowance%22%3A+999%2C+++++%22rate%22%3A+1000%2C+++++%22per%22%3A+60%2C+++++%22expires%22%3A+0%2C+++++%22quota_max%22%3A+-1%2C+++++%22quota_renews%22%3A+1406121006%2C+++++%22quota_remaining%22%3A+0%2C+++++%22quota_renewal_rate%22%3A+60%2C+++++%22access_rights%22%3A+%7B+++++++++%22528a67c1ac9940964f9a41ae79235fcc%22%3A+%7B+++++++++++++%22api_name%22%3A+%22OAuth+Test+API%22%2C+++++++++++++%22api_id%22%3A+%22528a67c1ac9940964f9a41ae79235fcc%22%2C+++++++++++++%22versions%22%3A+%5B+++++++++++++++++%22Default%22+++++++++++++%5D+++++++++%7D+++++%7D%2C+++++%22org_id%22%3A+%2253ac07777cbb8c2d53000002%22+%7D
 
 #### Sample response (code request)
@@ -144,6 +144,3 @@ endpoint for your application to generate these codes and redirect the end-user 
         "redirect_to": "http://client-app.com/oauth-redirect/#access_token=53ac07777cbb8c2d530000022b778ed6ef204a44794ed2bc9d120237&expires_in=3600&token_type=bearer",
         "token_type": "bearer"
     }
-
-
-

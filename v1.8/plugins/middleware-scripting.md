@@ -9,49 +9,49 @@ date = 2014-07-29T10:58:44Z
 
 ### Overview
 
-Middleware scripting is done in either a PRE or POST middleware chain context, dynamic middleware can be aplpied to both session-based APIs and Open (Keyless) APIs. 
+Middleware scripting is done in either a PRE or POST middleware chain context, dynamic middleware can be applied to both session-based APIs and Open (Keyless) APIs.
 
 The difference between the middleware types are:
 
-1. `PRE` - These middleware instances do not have access to the sesison object (as it has not been created yet) and therefore cannot perform modification actions on them.
+1. `PRE` - These middleware instances do not have access to the session object (as it has not been created yet) and therefore cannot perform modification actions on them.
 
-2. `POST` - these middleware components have access to the session object (the user quota, allowances and auth data), but have the option to disable it, as deserialising it into the JSVM is computationaly expensive and can add latency. 
+2. `POST` - these middleware components have access to the session object (the user quota, allowances and auth data), but have the option to disable it, as deserialising it into the JSVM is computationally expensive and can add latency.
 
 It is important to note that a new JSVM instance is created for *each* API that is managed, this means that inter-API communication is not possible via shared methods (they have different bounds), however it *is* possible using the session object if a key is shared across APIs.
 
 ### Creating a middleware component
 
-Tyk injects a TykJS namespace into the JSVM, this namespace can be used to initialise new a midleware component. Each middleware component should be in it's own `*.js` file.
+Tyk injects a TykJS namespace into the JSVM, this namespace can be used to initialise new a middleware component. Each middleware component should be in it's own `*.js` file.
 
 Creating a middleware object is done my calling the `TykJS.TykMiddleware.NewMiddleware({})` constructor with an empty object and then initialising it with your function using the `NewProcessRequest()` closure syntax.
 
 Here is an example implementation:
 
     /* --- sample.js --- */
-    
+
     // Create your middlware object
     var sampleMiddleware = new TykJS.TykMiddleware.NewMiddleware({});
 
-    // Initialise it with your functionality by passing a closure that accepts two objects 
+    // Initialise it with your functionality by passing a closure that accepts two objects
     // into the NewProcessRequest() function:
     sampleMiddleware.NewProcessRequest(function(request, session) {
-        
+
         log("This middleware does nothing, but will print this to your terminal.")
-        
+
         // You MUST return both the request and session metadata    
         return sampleMiddleware.ReturnData(request, session.meta_data);
     });
-    
+
 ### Middleware component variables
 
 As well as the [API functions](plugins/jsvm-api/) that all JSVM components share, the middleware components have access to some data structures that
 are performant and allow for the modification of both the request itself and the session. These objects are exposed to the middleware in the form of the `request` and `session` objects in the `NewProcessRequest(function(request, session) {};` call.
 
-In the example above, we can see that we return these variables - this is a requirement, and omiting it can cause the middleware to fail, this line should be called at the end of each process:
+In the example above, we can see that we return these variables - this is a requirement, and omitting it can cause the middleware to fail, this line should be called at the end of each process:
 
     return sampleMiddleware.ReturnData(request, session.meta_data);
-    
-This allows the middleware machinery to perform the necessary writes nd changes to the two main context objects.
+
+This allows the middleware machinery to perform the necessary writes and changes to the two main context objects.
 
 #### The `request` object
 
@@ -66,12 +66,12 @@ The `request` object provides a set of arrays that can be manipulated, that when
         AddParams     map[string]string
         DeleteParams  []string
     }
-    
+
 - **`Headers`**:  this is an object of string arrays, and represents the current state of the request header. This object cannot be modified directly, but can be used to read header data.
-- **`SetHeaders`**: This is a key-value map that will be set in the header whn the middleware returns the object, existing headers will be overwritten and nw headers will be added.
+- **`SetHeaders`**: This is a key-value map that will be set in the header when the middleware returns the object, existing headers will be overwritten and nw headers will be added.
 - **`DeleteHeaders`**: Any header name that is in this list will be deleted from the outgoing request. Deletes happen before Sets.
 - **`Body`**: This represents the body of the request, if you modify this field it will overwrite the request
-- **`URL`**: This represents the path -portion of the outpbound URL, use this to redirect a URL to a different endpoint upstream
+- **`URL`**: This represents the path -portion of the outbound URL, use this to redirect a URL to a different endpoint upstream
 - **`AddParams`**: You can add parameters to your request here, for example internal data headers that are only relevant to your network setup
 - **`DeleteParams`**: These parameters will be removed from the request as they pas through the middleware. Deletes happen before Addition.
 
@@ -79,10 +79,10 @@ Using the methods outlined above, alongside the API functions that are made avai
 
 #### The `session` object
 
-Tyk uses an internal sesison representation to handle the quota, rate limits, and access allowances of a specific key. This data can be made available to
-POST-processing middleware for processing. the sesison object itslef cannot be edited, as it is crucial to the correct functioning of Tyk. 
+Tyk uses an internal session representation to handle the quota, rate limits, and access allowances of a specific key. This data can be made available to
+POST-processing middleware for processing. the session object itself cannot be edited, as it is crucial to the correct functioning of Tyk.
 
-In order for middleware to be able to transfer data between each other, the session object makes availale a `meta_data` key/value field that is written back to the session store (and can be retrieved mby the middleware down the line) - this data is permanent, and can also be retreived by the REST API from outside of Tyk using the `/ty/keys/` method.
+In order for middleware to be able to transfer data between each other, the session object makes available a `meta_data` key/value field that is written back to the session store (and can be retrieved by the middleware down the line) - this data is permanent, and can also be retrieved by the REST API from outside of Tyk using the `/ty/keys/` method.
 
 The session object has the same representation as the one used by the API:
 
@@ -109,17 +109,17 @@ The session object has the same representation as the one used by the API:
             "your-key": "your-value"
         }
     }
-    
+
 There are other ways of accessing and editing a session object by using the Tyk JSVM API functions.
-    
+
 ### Hooking up the middleware component
 
-In order to activate this iddleware, it needs to be rgistered as part of your API Definition, registration of middleware components is relatively simple, *it is important that your object names are unique*.
+In order to activate this middleware, it needs to be registered as part of your API Definition, registration of middleware components is relatively simple, *it is important that your object names are unique*.
 
-Adding the middleware plugin is as simple as adding it to your defintiion file in the middleware sections:
+Adding the middleware plugin is as simple as adding it to your defintition file in the middleware sections:
 
     // sample_api.conf
-    
+
     ...
     "event_handlers": {},
     "custom_middleware": {
@@ -140,12 +140,12 @@ Adding the middleware plugin is as simple as adding it to your defintiion file i
     },
     "enable_batch_request_support": false,
     ...
-    
+
 As you can see, the parameters are all dynamic, so you will need to ensure that the path to your middleware is correct, the configuration sections here are as follows:
 
 #### `pre`
 
-Defines a list of custom middleware objects to run *in order* from top to bottom. That will be executed *before* any authentication information is extracted from the header or parameter list of the request. Use middleware in this section to pre-process a request before feeding it through the Tyk middleware. 
+Defines a list of custom middleware objects to run *in order* from top to bottom. That will be executed *before* any authentication information is extracted from the header or parameter list of the request. Use middleware in this section to pre-process a request before feeding it through the Tyk middleware.
 
 #### `pre[].name`
 
@@ -153,7 +153,7 @@ The name of the middleware object to call. This is case sensitive, it should mat
 
 #### `pre[].path`
 
-The path to the middleware compoenent, this will be loaded into the JSVM when the API is initialised. This means that if you reload an API configuration, the middleware will also be re-loaded. Meaning you can hot-swap middleware on reload with no service interuption.
+The path to the middleware component, this will be loaded into the JSVM when the API is initialised. This means that if you reload an API configuration, the middleware will also be re-loaded. Meaning you can hot-swap middleware on reload with no service interruption.
 
 #### `pre[].require_session`
 
@@ -161,7 +161,7 @@ Irrelevant for pre-processor middleware, since no auth data has been extracted b
 
 #### `post`
 
-Defines a list of custom middleware objects to run *in order* from top to bottom. That will be executed *after* the authentication, validation, throttling, and quota-limiting middleware has been executed, just before the request is proxied upstream. Use middleware in this section to post-process a request before sending it to your upstream API. 
+Defines a list of custom middleware objects to run *in order* from top to bottom. That will be executed *after* the authentication, validation, throttling, and quota-limiting middleware has been executed, just before the request is proxied upstream. Use middleware in this section to post-process a request before sending it to your upstream API.
 
 #### `post[].name`
 
@@ -169,8 +169,8 @@ The name of the middleware object to call. This is case sensitive, it should mat
 
 #### `post[].path`
 
-The path to the middleware compoenent, this will be loaded into the JSVM when the API is initialised. This means that if you reload an API configuration, the middleware will also be re-loaded. Meaning you can hot-swap middleware on reload with no service interuption.
+The path to the middleware component, this will be loaded into the JSVM when the API is initialised. This means that if you reload an API configuration, the middleware will also be re-loaded. Meaning you can hot-swap middleware on reload with no service interruption.
 
 #### `post[].require_session`
 
-Defaults to false, if you require access ot the session object, it will be supplied as a `session` variable to your middleware processor function.
+Defaults to false, if you require access to the session object, it will be supplied as a `session` variable to your middleware processor function.

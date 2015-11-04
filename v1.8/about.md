@@ -16,7 +16,7 @@ Tyk is a lightweight, open source API Gateway and Management platform that enabl
 
 An API Gateway sits in front of your application(s) and manages the heavy lifting of authorisation, access control and throughput limiting to your services. Ideally, it should mean that you can focus on creating services instead of implementing management infrastructure. For example if you have written a really awesome web service that provides geolocation data for all the cats in My Account, and you want to make it public, integrating an API gateway is a faster, more secure route that writing your own authorisation middleware.
 
-Tyk goes a step further in that it enables you to on-board developers through a dedicated portal, as well as analyse who uses your APis and how they use it through a powerful analytics platform.
+Tyk goes a step further in that it enables you to on-board developers through a dedicated portal, as well as analyse who uses your APIs and how they use it through a powerful analytics platform.
 
 ## Key Features of Tyk ##
 
@@ -52,7 +52,7 @@ Tyk offers powerful, yet lightweight features that allow fine gained control ove
 * **Focus on microservices** Use circuit breaker patterns, hard timeouts, and round-robin load balancing to get the most out of your services
 * **Service Discovery Support** Using [Etcd](https://github.com/coreos/etcd) or [Eureka](https://github.com/Netflix/eureka)? If your service discovery platform exposes a rest endpoint for your microservices, Tyk can consume it and dynamically reconfigure itself
 
-Tyk is written in Go, which makes it fast and easy to set up. It's only dependencies are Redis, 
+Tyk is written in Go, which makes it fast and easy to set up. It's only dependencies are Redis,
 and a MongoDB database (**v2.6 or higher required for analytics**, optional).
 
 ## Why? ##

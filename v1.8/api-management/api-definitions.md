@@ -7,13 +7,13 @@ date = 2014-07-29T10:56:22Z
     weight = -500
 +++
 
-This is a high-level overview of how APIs are defined in tyk - for a detailed breakdown of each option in the API definiton object, please see the 
+This is a high-level overview of how APIs are defined in Tyk - for a detailed breakdown of each option in the API definition object, please see the
 [detailed breakdown](/api-management/api-definition-detail/) section of this guide.
 
-Tyk can handle different access scenarios for multiple APIs in a single instance. It does this through the provision of API Definitions, these become handlers for 
+Tyk can handle different access scenarios for multiple APIs in a single instance. It does this through the provision of API Definitions, these become handlers for
 a specific root-path (`listen_path` in the configuration) and proxy every request into this root path to an outward host.
 
-The way a request is handled with tyk and bound to a spec is as follows:
+The way a request is handled with Tyk and bound to a spec is as follows:
 
 1. Request comes to host
 2. URL Router matches `listen_path`
@@ -33,7 +33,7 @@ Within an API definition, each element of this chain can be configured or activa
 
 ## Definition files
 
-Definitions take the form of files stored in the `/etc/tyk/apps/` folder, on startup Tyk will look for JSON files in this folder, and if it finds them 
+Definitions take the form of files stored in the `/etc/tyk/apps/` folder, on startup Tyk will look for JSON files in this folder, and if it finds them
 it will attempt to load a configuration form them. Configurations that are marked as active will be loaded into the Tyk routing infrastructure.
 
 Definition objects have the following structure - not all keys are required:
@@ -70,21 +70,18 @@ Definition objects have the following structure - not all keys are required:
             "strip_listen_path": true
         }
     }
-    
+
 For full details on how the varying fields in this configuration file work please see the [detailed breakdown](/api-management/api-definition-detail/) section of this guide.
 
 ## Hot-configuration reload
 
-It is possible to change an API configuration and reload that configuration into Tyk without having to stop the service. this is accomplished through hitting an enpoint in the 
+It is possible to change an API configuration and reload that configuration into Tyk without having to stop the service. this is accomplished through hitting an endpoint in the
 Tyk REST API:
 
     martin@vyr ~/tyk/> curl -H "X-Tyk-Authorization: your-secret-key-here" http:///tyk-instance.com:port/tyk/reload
-    
+
 If you can see the output screen of your Tyk instance you will see that it has reloaded the Definitions, changes take effect immediately.
 
-It is possible to restart the Tyk instance with near-zero downtime by sending the process a SIGUSR2 signal though the above method is preferred for updating or addding new API defintitions to a running setup.
+It is possible to restart the Tyk instance with near-zero downtime by sending the process a SIGUSR2 signal though the above method is preferred for updating or adding new API definitions to a running setup.
 
-If you are running tyk in a load balanced way (e.g. round-robin via NGinX) then you will need to send this request to each process.
-
-
-
+If you are running Tyk in a load balanced way (e.g. round-robin via NGinX) then you will need to send this request to each process.

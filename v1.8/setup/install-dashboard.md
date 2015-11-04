@@ -9,7 +9,7 @@ date = 2014-07-29T10:54:19Z
 
 Getting the dashboard running is very simple, you will need as a pre-requisite to have installed Tyk, Redis and MongoDB (v2.6+). If you haven't done this yet,
 it's probably worth making sure that all these are installed and working prior to installing tyk Dashboard. your Tyk installations does not need to be
-configured to any upstream services, we can do all that via the dashboard (in fact, this is recommended, because there is not system to import file-based 
+configured to any upstream services, we can do all that via the dashboard (in fact, this is recommended, because there is not system to import file-based
 configurations at the moment).
 
 [There's a demo setup for vagrant](../../v1.6/setup/vagrant-setup) if you're keen on testing Tyk and tyk dashboard without having to muddle through
@@ -17,7 +17,7 @@ installing each service individually, the write-up gives a step-by-step account 
 
 ## Requirements for Tyk Dashboard
 
-**MongoDB version 2.6+** Tyk Dashboard requires mongoDB version 2.6 or higher to be installed, using an older version will work, 
+**MongoDB version 2.6+** Tyk Dashboard requires mongoDB version 2.6 or higher to be installed, using an older version will work,
 but analytics data will not be displayed. Tyk Dashboard uses MongoDB's aggegation framework to generate the analytics charts,
 which is only available in version 2.6 and up.
 
@@ -40,17 +40,17 @@ Edit the `/etc/tyk.conf` file so hat it has analytics controllers set up:
             "mongo_collection": "tyk_analytics",
             "purge_delay": 10
         }
-    
+
     }
-    
+
 In the above snippet, unnecessary fields have been cut out, it's important to make sure that you have set up Tyk to monitor analytics (so the dashboard
-can display them) and tha the analytics configuration is set up to point at your Mondgo database, for a full run-down of the various parts of the configuration
+can display them) and the analytics configuration is set up to point at your Mongo database, for a full run-down of the various parts of the configuration
 file you can see more details [here](../../v1.6/setup/configuration/).
 
 ## Step 2: Unzip the Tyk Dashboard tarball
- 
+
 First off, we need to extract the tarball, this is pretty straightforward:
-    
+
     vagrant@precise64:~$ tar -xvzf tyk-dashboard-amd64-v0.9-4.tar.gz
     vagrant@precise64:~$ cd tyk-analytics-v0.9-4
 
@@ -59,7 +59,7 @@ First off, we need to extract the tarball, this is pretty straightforward:
 Make sure that it i called license.dat
 
 ## Step 4: Edit the the `tyk_analytics.conf` file
- 
+
 The `tyk_analytics.conf` file is the main setup document for your Tyk Dashboard installation. It has only a few fields that mainly pertain to being
 able to connect to Redis, Tyk and MongoDB, it looks like this:
 
@@ -80,7 +80,7 @@ able to connect to Redis, Tyk and MongoDB, it looks like this:
         "notify_on_change": true,
         "license_owner": "Your Name"
     }
-    
+
 **Note:** The default `tyk_analytics.conf` has the redis password set to `test` if this is a vanilla install, or you are not using
 password authentication, please make sure that this field is empty.
 
@@ -92,15 +92,15 @@ has access to all on the system, it is recommended to start with one organisatio
 In order to initialise and first-run your Tyk Dashboard, simply run it on the command line as follows:
 
     vagrant@precise64:~/tyk-analytics-v0.9$ ./tyk-analytics --neworg --newuser
-    
+
 You will be presented with a few questions about the Organisation and User to create, **Use quotation marks to enter multi-word names**, if your organisation is called
 `John Smith Limited`, then when asked for the Org name, enter `"John Smith Limited"`, as otherwise it will break. f you've done this, simply hit `Ctrl+C` to quit the
 app and try again.
 
-If you've created an Organisation, and then gone through the User Creation wizard, tyk should start up, and you should see that it is listening on the server at the 
+If you've created an Organisation, and then gone through the User Creation wizard, Tyk should start up, and you should see that it is listening on the server at the
 configured port.
 
-You should now be able to go to http://your-tyk-host.com:PORT/ and see a login screen. 
+You should now be able to go to http://your-tyk-host.com:PORT/ and see a login screen.
 
 ## Step 6: Log in as your new user
 
@@ -112,8 +112,8 @@ various services, users and keys. If this is a fresh install, you probably won't
 Tyk dashboard is very easy to run, and takes no additional requirements to start up, to start the server simply type the following into your command line:
 
     vagrant@precise64:~/tyk-analytics-v0.9.4$ ./tyk-analytics
-    
-    
+
+
 ## Congrats, you're all done!
 
 That's all there is to it, once Tyk dashboard is set up, you can use it to manage all of your services..

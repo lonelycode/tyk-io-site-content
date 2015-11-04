@@ -15,8 +15,8 @@ can be compiled into the version branch very easily for custom builds.
 
 ## Adding events to your API Definition
 
-Event handlers are assigned by event type, multiple handlers can be fired off per event. Event Handlers are fired as go routines and so will not interfere with 
-request processing. The webhook event handler aslo features a 'Flooding' check so that the same requests are not sent over and over again to an endpoint - this is
+Event handlers are assigned by event type, multiple handlers can be fired off per event. Event Handlers are fired as go routines and so will not interfere with
+request processing. The webhook event handler also features a 'Flooding' check so that the same requests are not sent over and over again to an endpoint - this is
 detailed in the webhook event handler documentation.
 
 Event handlers are added to your API definition file (or database document) and have their own unique configuration parameters for each instance,
@@ -87,14 +87,14 @@ The events currently raised by Tyk are:
 
 ## Event metadata
 
-Tyk events carry some additional metadata (especially important for the webhook handler). this data can be used by the webhook and exposed if 
+Tyk events carry some additional metadata (especially important for the webhook handler). this data can be used by the webhook and exposed if
 it implements it. The metadata that comes with an event is:
 
 - Message (string): a custom human readable message from the thing generating the event
 - Path (string): The path that was accessed that led to the event being fired
 - Origin (string): Origin data (if it exists)
 - Key (string): The key that raised the event
-- OriginatingRequest (string): Base64-encoded wire-protocol representation of the inbound request 
+- OriginatingRequest (string): Base64-encoded wire-protocol representation of the inbound request
 
 These metadata elements are exposed so that they can be used in templates - again, this only applies to the webhook handler in this version, however it
 is a generic feature available to all handlers, for an example of how they are used, see the `templates/default_webhook.json` file, this is a golang template
@@ -106,5 +106,3 @@ that directly accesses these values and exposes them as a webhook JSON payload.
 
 Tyk will now supply a base64 encoded representation of the original request to the event handler, if you are running a service bus or queue that stores failed, throttled or
 other types of requests, you can decode this object and parse it in order to re-create the original intent of the request (e.g. for post-processing).
-
-

@@ -4,21 +4,21 @@ title = "Host Manager"
 date = 2014-07-29T09:31:36Z
 [menu.sidebar_v1_8]
     weight = -100
-    
+
 +++
 
-The host manager is a utility that helps you manage Tyk reloads (deprecated - now integrated into Tyk Gateway) and to manage your 
+The host manager is a utility that helps you manage Tyk reloads (deprecated - now integrated into Tyk Gateway) and to manage your
 NGinX configuration and server.
 
-API's managed by Tyk tend to live behind long, obscure ID's and have unfriednly URLs, e.g.:
+APIs managed by Tyk tend to live behind long, obscure IDs and have unfriendly URLs, e.g.:
 
 	http://gateway.domain.com:8080/3b7e73fd18794f146aab9c2e07b787bf/widgets
 
 In order to get around this, you can set up NGinX to reverse proxy friendly subdomains such as api.domain.com to Tyk by
 the API ID (that long number in the first URL).
 
-If you have a rapidly changing API landscape, or are running Tyk with with multiple teams that each have their own APIs and are 
-running many of them at once, then you will want to automate subdomain management jsut for simplicities sake.
+If you have a rapidly changing API landscape, or are running Tyk with with multiple teams that each have their own APIs and are
+running many of them at once, then you will want to automate subdomain management just for simplicities sake.
 
 This is what the host manager is good for, it has a series of site templates (similar to those found in sites-enabled of your nginx
 setup) that it will generate for each API that it finds when a change occurs to your Tyk Gateway definitions.
@@ -43,7 +43,7 @@ The configuration of the host manager is very straightforward:
 	}
 
 The Mongo, Redis and Tyk configurations should match your `tyk.conf` setup for the main gateway. This is because the host manager needs to know
-when an update has occured (redis), the API's that have changed (mongo) and the tyk configuration (to notify Tyk if it is managed, to reload).
+when an update has occurred (redis), the API's that have changed (mongo) and the tyk configuration (to notify Tyk if it is managed, to reload).
 
 You should run the host manager as sudo as it will try to hot-reload the NginX server using a services command.
 
@@ -52,9 +52,9 @@ manager binary. This is where Tyk will write the API site definitions.
 
 ### Tags
 
-If you enable the `node_is_segmented` option then the host manager will only download API definitions that are in your tag groups, tags are selected as non-exclusive "OR" operations, so if any of them match a given API tag set, they will be loaded. 
+If you enable the `node_is_segmented` option then the host manager will only download API definitions that are in your tag groups, tags are selected as non-exclusive "OR" operations, so if any of them match a given API tag set, they will be loaded.
 
-This feature can be handy when distinguising upstream API's by a segment, client or geoography.
+This feature can be handy when distinguishing upstream APIs by a segment, client or geography.
 
 ### Templates
 
@@ -77,14 +77,14 @@ The individual templates will then take care of the actual redirects.
 
 #### Variables
 
-There are specific template variables taht are included with the templates for convenience, these are outlined below:
+There are specific template variables that are included with the templates for convenience, these are outlined below:
 
-* `.Slug` - The API Slug of your API, this can be set in the API Definition under the `slug` flag. 
-* `.OwnerSlug` - A slug for the organisation that owns the API, this mut be set when the organisation is created using the command line when setting up the dashboard OR by using the organisations API endpoint in the advanced API.
-* `.ApiId` - THE ID of the generating API, this is requiredfor the proxy URL
+* `.Slug` - The API Slug of your API, this can be set in the API Definition under the `slug` flag.
+* `.OwnerSlug` - A slug for the organisation that owns the API, this must be set when the organisation is created using the command line when setting up the dashboard OR by using the organisations API endpoint in the advanced API.
+* `.ApiId` - THE ID of the generating API, this is required for the proxy URL
 * `.CNAME` - A CNAME (if available), this needs to be set in the `tyk_organisations` collection in MongoDB and can also be set using the Tyk REST API
 
-If you examine the example files, you will see how these have been aplied in order to generate usable configurations for NginX.
+If you examine the example files, you will see how these have been applied in order to generate usable configurations for NginX.
 
 ### Subdomain-first or path-based API routing
 
@@ -93,7 +93,7 @@ The templates included with the host manager include two ways of handling domain
 - `api-1-name.domain.com/resource/id`
 - `api-2-name.domain.com/resource/id`
 
-In other cases this isn't feasible, for example if you are trying to expose a rational facade of API endpoints that actually hide multiple dispirate underlying APIs. In this case you probably want:
+In other cases this isn't feasible, for example if you are trying to expose a rational facade of API endpoints that actually hide multiple disparate underlying APIs. In this case you probably want:
 
 - `apis.domain.com/api-1-name/resource/id`
 - `apis.domain.com/api-2-name/resource/id`
@@ -101,4 +101,4 @@ In other cases this isn't feasible, for example if you are trying to expose a ra
 Both options are possible, the first is represented in the `nginx.conf` template and the latter is demonstrated in the `portal.conf` template.
 
 
-- 
+-

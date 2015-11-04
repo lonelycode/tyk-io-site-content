@@ -7,7 +7,7 @@ date = 2014-07-29T10:54:19Z
     weight = -110
 +++
 
-Tyk now supports redis cluster integration. To work with a redis cluster, simply specify it in your tyk.conf file:
+Tyk now supports Redis cluster integration. To work with a Redis cluster, simply specify it in your tyk.conf file:
 
 	"storage": {
         "type": "redis",
@@ -25,7 +25,7 @@ Tyk now supports redis cluster integration. To work with a redis cluster, simply
 
 ### Tyk Dashboard
 
-Tyk Dashboard also supports redis cluster, simply update the tyk_analytics.conf to use the cluster like so:
+Tyk Dashboard also supports Redis cluster, simply update the tyk_analytics.conf to use the cluster like so:
 
 	"redis_hosts": {
         "server1": "6379",
@@ -36,7 +36,7 @@ Tyk Dashboard also supports redis cluster, simply update the tyk_analytics.conf 
 
 ### Tyk Host Manager
 
-Tyk host manager can also conect to the redis cluster, update the host_manager.json file with the hosts entry, inthe same way as the tyk dashboard:
+Tyk host manager can also connect to the Redis cluster, update the host_manager.json file with the hosts entry, in the same way as the Tyk dashboard:
 
 	"redis_hosts": {
         "server1": "6379",
@@ -44,5 +44,3 @@ Tyk host manager can also conect to the redis cluster, update the host_manager.j
         "server23: "6381",
     },
     "enable_cluster": true
-
-

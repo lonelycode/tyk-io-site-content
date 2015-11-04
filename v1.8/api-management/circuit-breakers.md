@@ -26,14 +26,14 @@ To enable The breaker, you will need to add a new section to your versions `exte
 
 Circuit breakers use a threshhold-breaker pattern, so out of sample size `x` if `y%` of requests fail, the breaker will trip. When the breaker trips, the service is taken offline for the `return_to_service_after` period and an event is triggered.
 
-**Note:** The circuit breaker works across hosts (i.e. if you have multiple targets for an API, the samnple is across *all* upstream requests)
+**Note:** The circuit breaker works across hosts (i.e. if you have multiple targets for an API, the sample is across *all* upstream requests)
 
-**Note:** Circuit breakers are individual on a singlie host, they do not centralise or pool back-end data, this is for speed purposes. This means that in a load balanced environment where multiple Tyk nodes are used, some traffic can spill through as other nodes reach the sampling rate limit.
+**Note:** Circuit breakers are individual on a single host, they do not centralise or pool back-end data, this is for speed purposes. This means that in a load balanced environment where multiple Tyk nodes are used, some traffic can spill through as other nodes reach the sampling rate limit.
 
 ## Events
 
 When a circuit breaker trips, it will fire and event: `BreakerTriggered` which you can define actions for in the `event_handlers` section:
-	
+
 	```
 	event_handlers: {
 	    events: {
@@ -56,7 +56,7 @@ When a circuit breaker trips, it will fire and event: `BreakerTriggered` which y
 	```
 
 The status codes returned to the template are:
-	
+
 	```
 	// BreakerTripped is sent when a breaker trips
 	BreakerTripped = 0
@@ -68,4 +68,3 @@ The status codes returned to the template are:
 ## Service discovery
 
 If you are using the service discovery module, every time the breaker trips, Tyk will attempt to refresh the node list.
-
