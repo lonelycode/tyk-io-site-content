@@ -6,13 +6,13 @@ date = 2014-07-29T10:54:19Z
     parent = "setup"
 +++
 
-The Tyk Dashboard has a seperate configuration file, it is small and comes packaged with the tarball. Tyk Dashboard uses
-a seperate configuration file as it may be installed on a different host to your Tyk nodes. 
+The Tyk Dashboard has a separate configuration file, it is small and comes packaged with the tarball. Tyk Dashboard uses
+a separate configuration file as it may be installed on a different host to your Tyk nodes.
 
 The dashboard configuration file can be found in the tyk-dashboard folder and is usually called `tyk_analytics.conf` though
 it can be renamed and specified using the `--conf` flag.
 
-The file will look like the sample below, the various fields are explained in the followin sections:
+The file will look like the sample below, the various fields are explained in the following sections:
 
     {
         "listen_port": 3000,
@@ -63,7 +63,7 @@ username / password data. **this should be the same as the credentials that your
 
 ### `page_size`
 
-The page size that the dashboard shoul duse, defaults to `10` should not be edited.
+The page size that the dashboard should use, defaults to `10` should not be edited.
 
 ### Redis
 
@@ -80,7 +80,7 @@ The hostname for the redis collection, can be an IP address.
 
 #### `redis_password`
 
-If you have a set a password in your redis configuration using it's `requirepass` setting, enter it here. If this is set to 
+If you have a set a password in your redis configuration using it's `requirepass` setting, enter it here. If this is set to
 empty, Tyk Dashboard will not attempt to login to Redis.
 
 #### `redis_database`
@@ -91,9 +91,9 @@ Set this to the index of your redis database if you are using more than one
 
 Forces the dashboard to use certain defaults when generating API definitions.
 
-### `notify_on_change` 
+### `notify_on_change`
 
-Licensed users can use this setting to enable/disable whether Tyk Dashboard will notify all tyk nodes to hot-reload when 
+Licensed users can use this setting to enable/disable whether Tyk Dashboard will notify all tyk nodes to hot-reload when
 an API definition is changed.
 
 ### `license_owner`
@@ -102,6 +102,5 @@ Deprecated, licenses are no long required to use the dashboard
 
 ### `hash_keys`
 
-If your Tyk gateway is using hashed tokens, set this value here to `true` so it matches, the dashboard will now operate in a mode that is 
+If your Tyk gateway is using hashed tokens, set this value here to `true` so it matches, the dashboard will now operate in a mode that is
 compatible with key hashing
-

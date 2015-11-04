@@ -11,7 +11,7 @@ Tyk is very flexible, so we have developed several setup guides depending on wha
 
 This quickstart will give you a whistle-stop tour of the key components of a Tyk setup: The dashboard, the portal and the gateway.
 
-To get you started as fast as possible we're using our Tyk Cloud Hybrid setup as this gives you every component instantly without having to install anything but a single Docker container. This will install the Tyk gateway locally, and let you control it from our dashboard managmeent interface as well as experiment with the portal.
+To get you started as fast as possible we're using our Tyk Cloud Hybrid setup as this gives you every component instantly without having to install anything but a single Docker container. This will install the Tyk gateway locally, and let you control it from our dashboard management interface as well as experiment with the portal.
 
 **If you want to install the full stack locally, [click here](../docker/), otherwise, follow the steps below:**
 
@@ -60,7 +60,7 @@ Go to the "APIs" section in your Tyk Cloud Dashboard, and select the green butto
 
 Policies enable you to control the quotas and limits of groups of keys that are part of the policy. Policies are integral to using the portal, but can be safely ignored. You can always create keys manually and set their quotas on the key themselves.
 
-Under the Policies menu item, select "New Policy". You can leave all the defaults as is, except: 
+Under the Policies menu item, select "New Policy". You can leave all the defaults as is, except:
 
 1. Name the policy "Default"
 2. Select the "HttpBin" API in the access control section and click "Add" so it appears in the list
@@ -70,7 +70,7 @@ Save the policy by clicking the "Create" button.
 
 ### Step 6. Publish the API to the portal
 
-The API that you defined earlier is active and will work, however you don't have a key yet, you could manually create one in the "Keys" section, but it's bettter to use the portal flow to get your API key as a new developer. 
+The API that you defined earlier is active and will work, however you don't have a key yet, you could manually create one in the "Keys" section, but it's better to use the portal flow to get your API key as a new developer.
 
 An API catalogue entry combines a description of your underlying service(s) with a policy that a developer can subscribe to. Since a policy can give access to multiple services this enables you to have a flexible way to create API "Plans" that grant different levels of access to your services.
 
@@ -111,7 +111,7 @@ Once you have enrolled for an API, you'll be given an auth token, you can try it
 
 ### My keys won't update
 
-Hybrid setups work by caching a copy of keys in your local redis database, if you are looking to invalidate a token (e.g. you delete or change it from the cloud instance), then it will still be available on your local instance for at least 30 seconds until the change propagates to your cluster.
+Hybrid setups work by caching a copy of keys in your local Redis database, if you are looking to invalidate a token (e.g. you delete or change it from the cloud instance), then it will still be available on your local instance for at least 30 seconds until the change propagates to your cluster.
 
 A new key will become available instantly, but any changes or deletions can take up to 30s to fully propagate.
 

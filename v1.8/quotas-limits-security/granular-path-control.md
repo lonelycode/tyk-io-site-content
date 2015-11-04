@@ -7,16 +7,16 @@ date = 2014-07-29T10:57:15Z
 +++
 
 Tyk already lets you set version access right, white listed, and black-listed paths to control how your users access your APIs, however
-what has not been easy to do is to restrict access based on specific paths, per key. 
+what has not been easy to do is to restrict access based on specific paths, per key.
 
 Granular path Control allows you to define which methods and paths a key is allowed to access on a per API-version basis. This can be done
 on a key-by-key basis, or, for even more power and control, through the Policies feature.
 
 With this feature it is possible to set up tiered access policies for your users, so if you offer read only, free and extended access to your
-APIs and are harging for the higher levels, you can encode these tiers into policies, and use the granular path control feature to limit
+APIs and are charging for the higher levels, you can encode these tiers into policies, and use the granular path control feature to limit
 what paths and methods the keys with those access policies can access.
 
-Or, alternatively, you could just upgrade a single Key o have more access, both methods use the same, or similar areas of the configuration to make this possible.
+Or, alternatively, you could just upgrade a single Key to have more access, both methods use the same, or similar areas of the configuration to make this possible.
 
 **Note:** Granular permissions are applied *after* version-based (global) white/black list rules.
 
@@ -60,13 +60,13 @@ Lets take a look at a key session definition:
 	    "is_inactive": false
 	}
 
-Within the `access_rights` section, in each version definition, we can see an `allowed_urls` section, here we can define which URL's are 
+Within the `access_rights` section, in each version definition, we can see an `allowed_urls` section, here we can define which URL's are
 enabled in this key as follows:
 
 	"allowed_urls": [
-		{	
+		{
 			"url": "/resource/(.*),
-			"methods": ["GET", "POST"] 
+			"methods": ["GET", "POST"]
 		}
 	]
 
@@ -91,9 +91,9 @@ This feature is much more powerful when applied to key templates and the policie
 						"Default"
 					],
 					"allowed_urls": [
-						{	
+						{
 							"url": "/resource/(.*),
-							"methods": ["GET", "POST"] 
+							"methods": ["GET", "POST"]
 						}
 					]
 				}
@@ -104,4 +104,3 @@ This feature is much more powerful when applied to key templates and the policie
 	}
 
 These paths will be copied into the active key session the next time a key that is using this policy appears.
-

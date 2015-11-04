@@ -23,7 +23,6 @@ As of version 1.8.3.1 Tyk supports SSL connections. To enable SSL in your Tyk no
         ]
     },
     ```
-You can enter multiple certificates, that link to multiple domain names, this enables you to have multiple SSL certs for your gateways if they are provding access to different domains via the same IP.
+You can enter multiple certificates, that link to multiple domain names, this enables you to have multiple SSL certs for your gateways if they are providing access to different domains via the same IP.
 
 The `min_version` setting is optional, you can set it to `0`, `1` or `2` to to have Tyk only accept connections from TLS V1.0, 1.1 and 1.2 respectively.
-

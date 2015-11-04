@@ -14,7 +14,7 @@ random UUID. This ensures that keys can be "owned" by different API Owners shoul
 
 API keys without access_rights data will be written to _all_ API's on the system (this also means that they will be created
 across all SessionHandlers and StorageHandlers, it is recommended to always embed access_rights data in a key to ensure that only targeted API's and their
-back-ends are written to. 
+back-ends are written to.
 
 For smaller API's and implementations using the default Redis back end will not be unduly affected by this.
 
@@ -28,7 +28,7 @@ For smaller API's and implementations using the default Redis back end will not 
 
 #### Options
 
-Adding the `suppress_reset` parameter and setting it to `1`, will cause Tyk to *not* reset the quota limit that is in the current live quota manager. By default Tyk will reset the quota in the live quota manager (initialising it) when ADDing a key. Addin the `suppress_reset` flag to the URL paramters will avoid this behaviour.
+Adding the `suppress_reset` parameter and setting it to `1`, will cause Tyk to *not* reset the quota limit that is in the current live quota manager. By default Tyk will reset the quota in the live quota manager (initialising it) when ADDing a key. Adding the `suppress_reset` flag to the URL parameters will avoid this behaviour.
 
 #### Sample Request
 
@@ -36,7 +36,7 @@ Adding the `suppress_reset` parameter and setting it to `1`, will cause Tyk to *
     Host: localhost:5000
     x-tyk-authorization: 352d20ee67be67f6340b4c0605b044bc4
     Cache-Control: no-cache
-    
+
 {{% content link="/v1.8/object_examples/session_key/" view="fragment" %}}
 
 #### Sample response
@@ -46,11 +46,11 @@ Adding the `suppress_reset` parameter and setting it to `1`, will cause Tyk to *
         "status": "ok",
         "action": "create"
     }
-    
+
 ### Add/Update Keys
 
-You can also manually add keys to Tyk using your own key-generation algorithm. it is recommended if using this approach to ensure that the 
-`OrgID` being used in the API Definition and the key data is blank so that tyk does not try to prepend or manage the key in any way.
+You can also manually add keys to Tyk using your own key-generation algorithm. it is recommended if using this approach to ensure that the
+`OrgID` being used in the API Definition and the key data is blank so that Tyk does not try to prepend or manage the key in any way.
 
 |   **Property**    |   **Description**                 |
 |   -----------     |   ---------------                 |
@@ -61,7 +61,7 @@ You can also manually add keys to Tyk using your own key-generation algorithm. i
 
 #### Options
 
-Adding the `suppress_reset` parameter and setting it to `1`, will cause Tyk to *not* reset the quota limit that is in the current live quota manager. By default Tyk will reset the quota in the live quota manager (initialising it) when Adding or updating a key. Adding the `suppress_reset` flag to the URL paramters will avoid this behaviour.
+Adding the `suppress_reset` parameter and setting it to `1`, will cause Tyk to *not* reset the quota limit that is in the current live quota manager. By default Tyk will reset the quota in the live quota manager (initialising it) when Adding or updating a key. Adding the `suppress_reset` flag to the URL parameters will avoid this behaviour.
 
 #### Sample Request
 
@@ -69,7 +69,7 @@ Adding the `suppress_reset` parameter and setting it to `1`, will cause Tyk to *
     Host: localhost:5000
     x-tyk-authorization: 352d20ee67be67f6340b4c0605b044bc4
     Cache-Control: no-cache
-    
+
     {
         "allowance": 999,
         "rate": 1000,
@@ -118,7 +118,7 @@ Deleting a key will remove it permanently from the system, however analytics rel
     Host: localhost:5000
     x-tyk-authorization: 352d20ee67be67f6340b4c0605b044bc4
     Cache-Control: no-cache
-    
+
 #### Sample response
 
     {

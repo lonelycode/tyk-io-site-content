@@ -9,7 +9,7 @@ date = 2014-07-29T10:58:44Z
 
 ### Overview
 
-Embedded Javscript interpreters offer the bre bones of a scripting language, but not necessarily the functions that you would expect, esecially with JavaScript, where objects such as XMLHttpRequest() are a given. However, thse interfaces are actually provided by the browser / DOM that the script engine are executing in. In a similar vein, we have included a series of functions to the JSVM for convenience and give the interpreter more capability.
+Embedded Javscript interpreters offer the bare bones of a scripting language, but not necessarily the functions that you would expect, especially with JavaScript, where objects such as XMLHttpRequest() are a given. However, those interfaces are actually provided by the browser / DOM that the script engine are executing in. In a similar vein, we have included a series of functions to the JSVM for convenience and give the interpreter more capability.
 
 This list is regularly revised and any new suggestions should be made in our [Github issue tracker](https://github.com/lonelycode/tyk/issues).
 
@@ -17,11 +17,11 @@ below is the list of functions currently provided by Tyk.
 
 ### `log(string)`
 
-Calling `log("this message")` will cause Tyk to log the string to Tyk's default logger output in the form `JSVM Log: this message` as an INFO statement. This function is especially useful for debugging your scripts, it is recommended to put a `log()` call at the end of your middleware and event handler module definitions to indicate on load that they have been loaded succesfully - see the example scripts supplied with Tyk for more.
+Calling `log("this message")` will cause Tyk to log the string to Tyk's default logger output in the form `JSVM Log: this message` as an INFO statement. This function is especially useful for debugging your scripts, it is recommended to put a `log()` call at the end of your middleware and event handler module definitions to indicate on load that they have been loaded successfully - see the example scripts supplied with Tyk for more.
 
 ### `TykMakeHttpRequest(JSON.stringify(requestObject))`
 
-This method is used to makee an HTTP request, requests are encoded as JSON for deserialisation in the min binary and translation to a system HTTP call. The request object has the following structure:
+This method is used to make an HTTP request, requests are encoded as JSON for deserialisation in the min binary and translation to a system HTTP call. The request object has the following structure:
 
     newRequest = {
         "Method": "POST",
@@ -32,21 +32,21 @@ This method is used to makee an HTTP request, requests are encoded as JSON for d
         "FormData": {"field": "value"}
     };
 
-Tyk passes a simplified response back which ooks like this:
+Tyk passes a simplified response back which looks like this:
 
     type TykJSHttpResponse struct {
         Code int
         Body string
         Headers map[string][]string
     }
-    
-The response is JSON string encoded, and so will need to be decoded again before it is usable: 
+
+The response is JSON string encoded, and so will need to be decoded again before it is usable:
 
     usableResponse = JSON.parse(response);
     log("Response code: " + usableResponse.Code);
     log("Response body: " + usableResponse.Body);
 
-This method does not execute asyncoronously, so execution will block until a response is received.
+This method does not execute asynchronously, so execution will block until a response is received.
 
 ### `TykGetKeyData(api_key, api_id)`
 
@@ -62,7 +62,7 @@ Use this method to write data back into the Tyk session store:
 
     // You can modify the object just like with the REST API
     thisSession.expires = thisSession.expires + 1000;
-    
+
     // Use TykSetKeyData to set the key data back in the session store
     TykSetKeyData(event.EventMetaData.Key, JSON.stringify(thisSession));
 

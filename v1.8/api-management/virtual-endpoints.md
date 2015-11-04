@@ -7,17 +7,17 @@ date = 2014-07-29T10:57:08Z
     weight = -100
 +++
 
-Virtual endpoints are new and unique to tyk. with a virtual endpoint, you can plug short JavaScript functions at the end of a Tyk route and have them run when the endpoint is called.
+Virtual endpoints are new and unique to Tyk. with a virtual endpoint, you can plug short JavaScript functions at the end of a Tyk route and have them run when the endpoint is called.
 
-A sample use case for this might be aggregate functions that bring together related data from multiple services in your stack into a single object. 
+A sample use case for this might be aggregate functions that bring together related data from multiple services in your stack into a single object.
 
 Alternatively you could produce a dynamic response object that transforms or computes data in some way from upstream services.
 
-**Note:** The JavaScript environment that these methods run in is a traditional ECMAScript envrioenment and dos not offer the expressive power of something like nodeJS. These methods are meant to provide a functional interpreter bfor complex interactions with your underlying service that cannot be handled by one of the other middleware components.
+**Note:** The JavaScript environment that these methods run in is a traditional ECMAScript environment and dos not offer the expressive power of something like nodeJS. These methods are meant to provide a functional interpreter before complex interactions with your underlying service that cannot be handled by one of the other middleware components.
 
 ### Virtual Endpoint Functions
 
-To create one of these methods, create a file and place it in a subdirectory of the Tyk configuration enviornment (ideally under the `middleware` folder in your tyk installation), they are pretty clean, here is a sample method:
+To create one of these methods, create a file and place it in a subdirectory of the Tyk configuration environment (ideally under the `middleware` folder in your Tyk installation), they are pretty clean, here is a sample method:
 
 	```
 	function sampleVirtual(request, session, config) {
@@ -38,14 +38,14 @@ To create one of these methods, create a file and place it in a subdirectory of 
 		var responseObject = {
 			Body: "THIS IS A  VIRTUAL RESPONSE"
 			Headers: {
-				"test": "virtual", 
+				"test": "virtual",
 				"test-2": "virtual"
 			},
 			Code: 200
 		}
 
 		return TykJsResponse(responseObject, session.meta_data)
-		
+
 	}
 	log("Virtual Test initialised")
 	```
@@ -54,15 +54,15 @@ The JSVM that this method runs in is the same as the plugins and middleware API,
 
 #### An aggregate JS function
 
-The most commonu use case for this functionality, as we see it, is to provide some form of aggregate data to your users, here's a snippet that will do jsut that using the new Batch processing API:
+The most common use case for this functionality, as we see it, is to provide some form of aggregate data to your users, here's a snippet that will do just that using the new Batch processing API:
 
 	```
 	function batchTest(request, session, config) {
-		// Set up a reponse object
+		// Set up a response object
 		var response = {
 			Body: ""
 			Headers: {
-				"test": "virtual-header-1", 
+				"test": "virtual-header-1",
 				"test-2": "virtual-header-2",
 				"content-type": "application/json"
 			},
@@ -105,7 +105,7 @@ The most commonu use case for this functionality, as we see it, is to provide so
 		response.Body = JSON.stringify(asJS)
 
 		return TykJsResponse(response, session.meta_data)
-		
+
 	}
 	log("Batch Test initialised")
 	```
@@ -132,11 +132,11 @@ Virtual paths follow the same layout and setup as other elements in the `extende
 
 #### `response_function_name`
 
-This is the function to run, we need to know this as it will be the entrypoint into tyour code, this will be called first. Make sure it is unique, all plugins run in the same VM, so if there are naming collisions you may end up with unpredictable behaviour.
+This is the function to run, we need to know this as it will be the entrypoint into your code, this will be called first. Make sure it is unique, all plugins run in the same VM, so if there are naming collisions you may end up with unpredictable behaviour.
 
 #### `function_source_type`
 
-This can be `file` or `blob` If set to `file`, then Tyk will pre-load the JS from disk, if set to blob, then Tyk will base64-decode a string from the `function_source_uri` seciton. 
+This can be `file` or `blob` If set to `file`, then Tyk will pre-load the JS from disk, if set to blob, then Tyk will base64-decode a string from the `function_source_uri` section.
 
 #### `function_source_uri`
 
@@ -144,4 +144,4 @@ This will be the relative path to the source of the functionality (e.g. `myfile.
 
 #### `use_session`
 
-If true then the key session data will be provided to the functiona s the `session` variable. See the plugins documentation for more detail about this object. 
+If true then the key session data will be provided to the function as the `session` variable. See the plugins documentation for more detail about this object.
