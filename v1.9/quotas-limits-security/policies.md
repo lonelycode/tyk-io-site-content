@@ -43,7 +43,8 @@ A Tyk policy template looks just like the session object that is used when you c
 	  },
 	  active: true,
 	  is_inactive: false,
-	  tags: []
+	  tags: [],
+	  key_expires_in: 0
 	}
 
 Here you can see the various fields as they are applied to Tyk access tokens, these are all described in the access tokens section of this guide.
@@ -55,6 +56,18 @@ The `active` flag must be set to `true` for Tyk to load the policy into memory, 
 Secondly, the `is_inactive` flag applies to the key itself. If you set this value to `true`, any key with this policy will be disabled, you can actually
 set this same value on a key object to make the single key inactive, but as part of a policy it makes it possible to deny access to a whole block of
 users with a single change.
+
+### Creating trial keys
+
+As of v1.9 it is possible to have a policy create "Trial" keys, these are keys with a fixed expiry date set in the number of seconds from the time of the keys creations.
+
+Although key expiry can be set in the session object on creation, when a key is created using the portal or a key request it will have a default expiry time.
+
+To set a trial key expiry, simply add:
+
+	`key_expires_in: 50000`
+
+To the policy object, when the key is generated, the expiry will be forced.
 
 ### Enabling a policy in standalone / file based mode
 

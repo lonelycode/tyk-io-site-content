@@ -12,13 +12,11 @@ The circuit breaker will also emit an event which you can hook into to perform s
 
 To enable The breaker, simply select the option from the plugins drop-down. You will need to define the optimal options for your circuit breaker in the form that appears.
 
-![Plugins - Circuit Breaker](/imgs/circuit-breaker.png)
-
 The options available to the circuit breaker are:
 
 - **Trigger threshold percentage**: The percentage of requests that should fail before the breaker trips
 - **Sample size**: The number of requests to sample
-- **Return to service in (s)**: How long to take the service offline
+- **Return to service in (s)**: How long to take the service off-line
 
 ### Service discovery
 

@@ -6,13 +6,11 @@ date = 2014-07-29T09:31:36Z
     parent="plugins"
 +++
 
-Tyk suports body transforms (both on the request, and the response). Tyk does this using powerful Golang templates. Transforms only work on JSON data types, to dynamically change a response, otherwise you culd always use a transform to completly override a response.
+Tyk supports body transforms (both on the request, and the response). Tyk does this using powerful Golang templates. Transforms only work on JSON data types, to dynamically change a response, otherwise you could always use a transform to completely override a response.
 
-![Plugins - Body transform](/imgs/transforms.png)
+You can use this interface to test out your templates on sample input data before committing them to Tyk. Use the "Input" field to enter the data that your service or your client will call with. Enter your template into the "Template" field, and then press "Test", Tyk will evaluate your template against the sample input and show you how it outputs.
 
-Yu can use this interface to test out your templates on sample input data before commiting them to Tyk. Use the "Input" field to enter the data that your service or your client will call with. Enter your template intot he "Template" field, and then press "Test", Tyk will evaluate your template against the sample input and show you how it outputs.
-
-If you select the "inlude session meta data" option, then Tyk will also allow you to use the meta_data from your key objects (see below for an example).
+If you select the "include session meta data" option, then Tyk will also allow you to use the meta_data from your key objects (see below for an example).
 
 ### Example body transform
 

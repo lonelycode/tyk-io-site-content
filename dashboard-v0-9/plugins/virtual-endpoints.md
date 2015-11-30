@@ -6,7 +6,7 @@ date = 2014-07-29T09:31:36Z
     parent="plugins"
 +++
 
-Virtual paths are a powerful feature in Tyk, they enable you to create small code snippets that run on your set path. These snippets can be written in Javascript and offer an easy way to create dynamic, flexible endpoints that perform complex interactions with your underlying services. Virtual endpoints are less-powerful versions of AWS Lambda functions as they do not offer a full NodeJS-like environment.
+Virtual paths are a powerful feature in Tyk, they enable you to create small code snippets that run on your set path. These snippets can be written in JavaScript and offer an easy way to create dynamic, flexible endpoints that perform complex interactions with your underlying services. Virtual endpoints are less-powerful versions of AWS Lambda functions as they do not offer a full NodeJS-like environment.
 
 Virtual endpoints can also be cached, which can significantly reduce load on your back-end services if you are providing an aggregate virtual endpoint.
 
@@ -50,7 +50,7 @@ The below code is the basic outline of a virtual endpoint function:
 
 A virtual endpoint needs to have the above signature in order to work correctly, anything other than the above will produce `undefined` errors. In a virtual endpoint, you have full access to a the request object, the session object (if the virtual path is in an authenticated API), and the configuration parameters of the function - though this is rarely used.
 
-### Writng an aggregate function
+### Writing an aggregate function
 
 The most common use case foe a virtual endpoint is to provide some kind of aggregate function to your end users. Our JSVM exposes the batch-request methods to the JS API:
 
@@ -108,7 +108,7 @@ The most common use case foe a virtual endpoint is to provide some kind of aggre
 	log("Batch Test initialised")
 	```
 
-The Virtual Endpoint plugin has access to the same methods taht the tyk plugins API has. Please see the relevant documentation in that section to see what methods are available.
+The Virtual Endpoint plugin has access to the same methods that the tyk plugins API has. Please see the relevant documentation in that section to see what methods are available.
 
 ### Request objects
 
@@ -151,4 +151,4 @@ The session State object is the full session object, these will be available as 
 
 
 
-**Note:** The JavaScript environment that these methods run in is a traditional ECMAScript envrioenment and dos not offer the expressive power of something like nodeJS. These methods are meant to provide a functional interpreter bfor complex interactions with your underlying service that cannot be handled by one of the other middleware components.
+**Note:** The JavaScript environment that these methods run in is a traditional ECMAScript environment and dos not offer the expressive power of something like nodeJS. These methods are meant to provide a functional interpreter for complex interactions with your underlying service that cannot be handled by one of the other middleware components.

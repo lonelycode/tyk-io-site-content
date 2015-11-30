@@ -3,7 +3,7 @@ draft = false
 title = "SSL"
 date = 2014-07-29T10:54:19Z
 [menu.sidebar_v1_9]
-    parent = "setup"
+    parent = "configuration"
     weight = -100
 +++
 

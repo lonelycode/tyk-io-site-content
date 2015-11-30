@@ -31,4 +31,4 @@ The `--neworg` flag creates a new organisation, and the `--newuser` flag creates
 
 The only special case is when a user is created without an empty OrgID, this can be done via the command line by not selecting an API on user creation, or via the advanced API.
 
-Users that are not assigned to an Organisation gain special priveleges in the dashboard, and can see all APIs, users and all analytics data disregarding organisations. These users will not be able to add new users to other organisations though, only to their own ocntet - o any users they crate wil lalso be super-users.
+Users that are not assigned to an Organisation gain special privileges in the dashboard, and can see all APIs, users and all analytics data disregarding organisations. These users will not be able to add new users to other organisations though, only to their own context - so any users they crate will also be super-users.

@@ -144,3 +144,30 @@ endpoint for your application to generate these codes and redirect the end-user 
         "redirect_to": "http://client-app.com/oauth-redirect/#access_token=53ac07777cbb8c2d530000022b778ed6ef204a44794ed2bc9d120237&expires_in=3600&token_type=bearer",
         "token_type": "bearer"
     }
+
+### Invalidate Refresh Token
+
+It is possible to invalidate refresh tokens in order to manage OAuth client access more robustly:
+
+|   **Property**    |   **Description**                                 |
+|   -----------     |   ---------------                                 |
+|   Resource URL    |   `/tyk/oauth/refresh/{key}?api_id={api_id}`      |
+|   Method          |   DELETE                                          |
+|   Type            |                                                   |
+|   Body            |   NONE                                            |
+
+#### Sample request
+
+    DELETE /tyk/oauth/clients/25348e8cf157409b52e39357fd9578f1/061ba634e6644b40633fa9456b138f4b HTTP/1.1
+    Host: localhost:5000
+    x-tyk-authorization: 352d20ee67be67f6340b4c0605b044b7
+    Cache-Control: no-cache
+
+#### Sample response
+
+    {
+        "key": "061ba634e6644b40633fa9456b138f4b",
+        "status": "ok",
+        "action": "deleted"
+    }
+

@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Key changes in v1.8"
+title = "Key changes in v1.9"
 date = 2015-08-01T09:31:36Z
 categories = ["home"]
 [menu.sidebar_v1_9]
@@ -9,371 +9,181 @@ home = "1"
 +++
 
 
-Tyk version 1.8 is a step change in how we are tackling API management, focussing on three core areas: Microservices, Reporting and Deployment.
+In version 1.9 we have focused extensively on two things: Improved and expanded data and ease of deployment.
 
-## Microservices
+### Ease of deployment
 
-In this release we have some very juicy new features geared specifically towards the API Gateway's role in a microservices-style environment, however many will find these features will also be of benefit in more traditional setups.
+Tyk is already pretty easy to deploy, being a single binary that can be dropped into a system and run right there and then without any compilation, interpreters or dependencies.
 
-### Virtual endpoints
+We've been speaking to our clients' DevOps teams, and one thing they particularly enjoy seeing is a secure, effective and reliable pattern for deploying third-party applications to their systems.
 
-Virtual endpoints enable you to write a short snippet of JS that will get run every time the endpoint is hit, very similar to AWS Lambda functions (though not as powerful), these functions can perform typical integration tasks for a microservice infrastructure such as aggregating multiple endpoints into a single user-friendly facade.
+The other thing we've heard a lot of feedback about is the host maanger, and how having NGinX as a dependency is limiting as it's "another moving part".
 
-For example, you may have a set of product detail services:
+What have we done to address these things?
 
-- `ProductReviews` - Provides reviews for a product ID
-- `ProductStock` - Provides Stock level information for a product ID from your warehouse
-- `ProductDescription` - The description of the product as described by the marketing team
-- `ProductImages` - The product image gallery
+**We got rid of the host manager** Tyk no longer needs the host manager in order to route domains to their underlying services or portals. As of v1.9 you can configure a domain for:
 
-A third-party consumer of this API, in order to provide an overview of the product, would need to make four calls to your services in order to present it all. which is quite the burden on the developer.
+- The Tyk gateway itself (catch-all)
+- The dashboard
+- The control API (for secure access)
+- On a per-API basis
+- On a per-portal basis
 
-Using a Virtual path, you could write a short function that uses our built-in batch-requester to asynchronously call those endpoints and return a rational result, via our built-in cache.
+All form within the dashboard or the configuration files.
 
-Naturally this isn't the only use case, but it offers a glimpse into the kind of flexibility that can be built into an API managed by tyk 1.8's new features.
+And if you are running the full Tyk stack on a single instance, then we've made it easy for users to use Tyk the same way we used to use NginX - by having the Tyk nodes proxy the domain for the portal to the relevant organisation portal pages just like any other API.
 
-### Circuit breakers and hard timeouts
+**We've standardised our deployment packages*** As of v1.9 Tyk ships as DEB and signed RPM packages, and are provided to end-users using our GPG-signed package repository. This means that you can use APT or YUM to install Tyk and Tyk Dashboard to your servers in a repeatable and industry standard way.
 
-In high-availability systems, you will want to return a response back to the client as soon as possible, and return gracefully instead of timing out (or running endlessly) after a long-running process hangs. Hard timeouts do exactly that, they let you set a failure threshold for any request on a path bypath basis.
+We've also gone a step further and have provided init scripts for Upstart, SysV and Systemd, which means starting and stopping Tyk is as simple as `sudo service tyk-gateway start|stop|restart|status`.
 
-Sometimes though, you need to go a little further, and instead be able to just stop inbound requests full stop once you start detecting a pattern of failure. This is where the circuit-breaker comes in. Tyk's circuit breaker will measure the number of failure codes that are returned by your upstream service, and if a specific threshold is hit (e.g. 80% of responses are error codes), instead of letting the failure cascade across your infrastructure, you will want to be notified and stop any further damage.
+We think that these two changes make it much easier for you to install, setup, manage and deploy Tyk ro any Linux distribution. We have signed repositories for Ubuntu LTS releases, Red Hat Enterprise Linux 6 and 7, and Debian Jessie.
 
-Tyk's circuit breaker will take a service offline and return an error to all clients for a specific "downtime period", you can then set up a webhook to notify when a circuit is "tripped", allowing your infrastructure to heal itself, or for manual intervention by your DevOps team.
+We'll still provide the tarballs to manually install tyk on our Github Repo page, but encourage users to use our package repositories to install Tyk on supported systems.
 
-### Round-robin load balancing
+### Improved Data
 
-In dockerized environments, you may have a cluster of containers running the same service, and you will want to pass traffic between them equally. You could do this by adding a load balancing layer to the cluster, or, you could just tell Tyk to do it for you. Tyk has a built in capability to load balance across a host of upstream services in order to distribute load effectively.
+This version of tyk introduces a new feature: Uptime Awareness, with this feature, we have your tyk nodes actively poll your endpoints with specific uptime tests. Over time, Tyk collects analytics on Latency, errors and overall availability. Providing a granular view in your dashbaord to dig deeper into failures and issues.
 
-This is especially powerful with the circuit breaker pattern, as can be seen in our next section when we bring these features together under our new "service discovery" features.
+We've made this feature as flexible as possible, enabling you to configure these tests dynamically using Service Discovery tools such as etcd or consul, while also making it possible to hook up "Host Up" and "Host Down" events to webhooks or custom javascript applications to interact with, and react to, any incidents in your infrastructure.
 
-### Service discovery
+When enabled, Tyk can integrate this feature with it's round-robin load-balancing to remove unhealthy hosts from circulation until they come back on-line.
 
-Any API managed by Tyk can now enable a "service discovery mode" where you can dynamically feed host information to a running gateway when your upstream configuration changes.
+### Bug fixes and UX
 
-Tyk's service discovery module lets you set up an endpoint to call which must return a JSON object, and a namespace to query to identify the host and port of the upstream instance (or instances, if you are using load balancing) that should be loaded up when the node starts, and how often to refresh this list based on a cache timeout.
+We've overhauled the dashboard UX, making it more robust and a little faster / easier to use. The biggest change is in how we render the graphs, whih we hope you enjoy.
 
-We've integrated this module with the circuit breaker and load balancers, so that if the breaker trips, Tyk will try to fetch a new set of service information when the service is brought back online.
+We've spent a lot of time fixing bugs, improving logger output and overall trying to make things more robust, performant and better.
 
-Service discovery should work with any service that can provide a JSON REST endpoint to query.
+As always, we're open to feedback on our Github repo, or in our Community forum.
 
-## Reporting
+### ChangeLog v1.9
 
-On the reporting side of things we have made our analytics platform more powerful by adding a new "tagging" feature. You can now add arbitrary tags to nodes (more about that below), policies, or keys that will be fed into the API Analytics recorded by the dashboard.
-
-This means that you will be able to segment your analytics by:
-
-- Where the traffic originated from in your setup (which nodes are doing the most work)
-- How policies of users behave across your traffic (e.g. Free Premium and Pro tier users)
-- How individual / special keys are behaving (e.g. internal services)
-
-YWhen you push a tag into a policy or a key, those changes are reflected instantly in your analytics. So it can also serve as a quick tool to diagnose behaviour ad-hoc.
-
-## Deployment
-
-Related to the tagging approach before, we mentioned that nodes themselves can be tagged. In this version of tyk it is possible to "shard" your APIs across node groups. So for example, say you had "Health", "Finance" and "Ops" sectors that grouped APIs and the nodes should not be aware of any other APIs in your setup, you can now have a single node only selectively load APIs by filtering them by their respective Tags.
-
-In this case you set a tag on your API Definition in a new `tags: []` property and any node that has any of those tags in it's filter list will load those APIs.
-
-This means you can now manage a multi-cluster, multi-noe, segregated API ecosystem with a single dashboard, which should make your DevOps team happy.
-
-## The full Changelog for v1.8:
-
-- Security option added for shared nodes: Set `disable_virtual_path_blobs=true` to stop virtual paths from loading blob fields
-- Added session meta data variables to transform middleware:
-
-	You can reference session metadata attached to a key in the header injector using:
+- Gateway Mongo Driver updated to be compatible with MongoDB v3.0
+- Fixed OAuth client listings with redis cluster
+- Some latency improvements
+- Key detection now checks a local in-memory cache before reaching out to Redis, keys are cached for 10 seconds, with a 5 second purge rate (so a maximum key existence of 15s). Policies will still take instant effect on keys
+- key session cache is configurable, set `local_session_cache.cached_session_timeout` (default 10) and `local_session_cache.cached_session_eviction` (default 5) to the cache ttl and eviction scan times
+- key session cache can be disabled: `local_session_cache.disable_cached_session_state`
+- Test update to reduce number of errors, cleaner output
+- Healthcheck data now stored in a sorted set, much cleaner and faster, now works with redis cluster!
+- Bug fixed: Empty or invalid listen path no longer crashes proxy
+- Bug fixed: Basic Auth (and Oauth BA) passwords are now hashed, this is backward compatible, plaintext passwords will still work
+- OAuth access token expiry can now be set (in seconds) in the `tyk.conf` file using `oauth_token_expire:3600`
+- Proxy now records accurate status codes for upstream requests for better error reporting
+- Added refresh token invalidation API: `DELETE /tyk/oauth/refresh/{key}?api_id={api_id}`
+- Global header injection now works, can be enabled on a per-version basis by adding `global_headers:{"header_name": "header value"}` to the version object in the API Definition, global injections also supports key metadata variables.
+- Global header deletion now works: add `"global_headers_remove":["header_name", "header_name"]` to your version object
+- Added request size limiter, request size limiter middleware will insist on content-length to be set, and check first against content-length value, and then actual request size value. To implement, add this to your version info:
 
 	```
-	$tyk_meta.KEY_NAME
-	```
-
-	And in the body transform template through:
-
-	```
-	._tyk_meta.KEYNAME
-	```
-
-	You must enable session parsing in the TemplateData of the body transform entry though by adding:
-
-	```
-	"enable_session": true
-	```
-
-	To the path entry
-
-- Added CORS support, add a CORS section to your API definition:
-
-	 ```
-	 CORS: {
-	    enable: false,
-	    allowed_origins: [
-	      "http://foo.com"
-	    ]
-	 },
+	"size_limits": [
+	    {
+	      "path": "widget/id",
+	      "method": "PUT",
+	      "size_limit": 25
+	    }
+	 ]
 	 ```
 
-- Full CORS Options are:
+- Request size limits can also be enforced globally, these are checked first, to implement, add `"global_size_limit": 30` to your version data.
+- Adding a `key_expires_in: seconds` property to a policy definition will cause any key that is created or added using this policy to have a finite lifetime, it will expire in `now()+key_expiry` seconds, handy for free trials
+- Dependency update (logrus)
+- Added support for JSON Web Token (JWT), currently HMAC Signing and RSA Public/Private key signing is supported. To enable JWT on an API, add `"enable_jwt": true,` to your API Definition. Then set your tokens up with these new fields when you create them:
 
 	```
-	CORS struct {
-		Enable             bool     `bson:"enable" json:"enable"`
-		AllowedOrigins     []string `bson:"allowed_origins" json:"allowed_origins"`
-		AllowedMethods     []string `bson:"allowed_methods" json:"allowed_methods"`
-		AllowedHeaders     []string `bson:"allowed_headers" json:"allowed_headers"`
-		ExposedHeaders     []string `bson:"exposed_headers" json:"exposed_headers"`
-		AllowCredentials   bool     `bson:"allow_credentials" json:"allow_credentials"`
-		MaxAge             int      `bson:"max_age" json:"max_age"`
-		OptionsPassthrough bool     `bson:"options_pasthrough" json:"options_pasthrough"`
-		Debug              bool     `bson:"debug" json:"debug"`
-	} `bson:"CORS" json:"CORS"`
-	```
-
-- Fixed cache bug
-- When using node segments, tags will be transferred into analytics data as well as any token-level tags, so for example, you could tag each node independently, and then view the traffic that went through those nodes by ID or group them in aggregate
-- You can now segment gateways that use a DB-backed configurations for example if you have APIs in different regions, or only wish to service a segment of your APIs (e.g. "Health APIs", "Finance APIs"). So you can have a centralised API registry using the dashboard, and then Tag APIs according to their segment(s), then configure your Tyk nodes to only load those API endpoints, so node 1 may only serve health APIs, while node 2 might serve a mixture and node 3 will serve only finance APIs. To enable, simply configure your node and add to `tyk.conf` and `host_manager.conf` (if using):
-
-	"db_app_conf_options": {
-        "node_is_segmented": false,
-        "tags": ["test2"]
-    }
-
-- You will need to add a `tags: []` section to your API definition in the DB to enable this feature, or set it in the dashboard.
-- Dynamic endpoints support response middleware
-- Dynamic endpoints support caching
-- Dynamic endpoints also count towards analytics
-- JSVM now has access to a `TykBatchRequest` function to make batch requests in virtual paths. Use case: Create a virtual endpoint that interacts with multiple upstream APIs, gathers the data, processes the aggregates somehow and returns them as a single body. This can then be cached to save on load.
-- Added virtual path support, you can now have a JS Function respond to a request, makes mocking MUCh more flexible, TODO: expose batch methods to JSVM. To activate, add to extended paths:
-
-	```
-	virtual: [
-        {
-          response_function_name: "thisTest",
-          function_source_type: "file",
-          function_source_uri: "middleware/testVirtual.js",
-          path: "virtualtest",
-          method: "GET",
-          use_session: true
-        }
-    ]
-    ```
-
-- Virtual endpoint functions are pretty clean:
-
-	```
-	function thisTest(request, session, config) {
-		log("Virtual Test running")
-
-		log("Request Body: ")
-		log(request.Body)
-
-		log("Session: ")
-		log(session)
-
-		log("Config:")
-		log(config)
-
-		log("param-1:")
-		log(request.Params["param1"])
-
-		var responseObject = {
-			Body: "THIS IS A  VIRTUAL RESPONSE"
-			Headers: {
-				"test": "virtual",
-				"test-2": "virtual"
-			},
-			Code: 200
-		}
-
-		return TykJsResponse(responseObject, session.meta_data)
-
+	"jwt_data": {
+		"secret": "Secret"
 	}
-	log("Virtual Test initialised")
 	```
 
-- Added refresh tests for OAuth
-- URL Rewrite in place, you can specify URLs to rewrite in the `extended_paths` section f the API Definition like so:
+- HMAC JWT secrets can be any string, but the secret is shared. RSA secrets must be a PEM encoded PKCS1 or PKCS8 RSA private key, these can be generated on a linux box using:
+
+	> openssl genrsa -out key.rsa 
+	> openssl rsa -in key.rsa -pubout > key.rsa.pub
+
+- Tyk JWT's MUST use the "kid" header attribute, as this is the internal access token (when creating a key) that is used to set the rate limits, policies and quotas for the user. The benefit here is that if RSA is used, then al that is stored in a Tyk installation that uses hashed keys is the hashed ID of the end user and their public key, and so very secure.
+- Fixed OAuth Password flow bug where a user could generate more than one token for the same API
+
+- Added realtime uptime monitoring, uptime monitoring means you can create a series of check requests for your upstream hosts (they do not need to be the same as the APIs being managed), and have the gateway poll them for uptime, if a host goes down (non-200 code or TCP Error) then an Event is fired (`HostDown`), when it goes back up again another event is fired (`HostUp`), this can be combined with the webhook feature for realtime alerts
+- Realtime monitoring also records statistics to the database so they can be analysed or graphed later
+- Real time monitoring can also be hooked into the load balancer to have the load balancer skip bad hosts for dynamic configuration
+- When hosts go up and down, sentinels are activated in Redis so all nodes in a Tyk cluster can benefit
+- Only one Tyk node will ever do the polling, they use a rudimentary capture-the-flag redis key to identify who is the uptime tester
+- Monitoring can also be disabled if you want a non-active node to manage uptime tests and analytics purging
+- The uptime test list can be refreshed live by hot-reloading Tyk
+- Active monitoring can be used together with Circuit breaker to have the circuit breaker manage failing methods, while the uptime test can take a whole host offline if it becomes unresponsive
+- To configure uptime tests, in your tyk.conf:
 
 	```
-	"url_rewrites": [
-        {
-          "path": "virtual/{wildcard1}/{wildcard2}",
-          "method": "GET",
-          "match_pattern": "virtual/(.*)/(\d+)",
-          "rewrite_to": "new-path/id/$2/something/$1"
+	"uptime_tests": {
+        "disable": false, // disable uptime tests on the node completely
+        "config": {
+            "enable_uptime_analytics": true,
+            "failure_trigger_sample_size": 1,
+            "time_wait": 5,
+            "checker_pool_size": 50
         }
-      ]
+    }
     ```
 
-- You can now add a `"tags":["tag1, "tag2", tag3"]` field to token and policy definitions, these tags are transferred through to the analytics record when recorded. They will also be available to dynamic middleware. This means there is more flexibility with key ownership and reporting by segment.`
-- Cleaned up server output, use `--debug` to see more detailed debug data. Keeps log size down
-- TCP Errors now actually raise an error
-- Added circuit breaker as a path-based option. To enable, add a new section to your versions `extended_paths` list:
+- Check lists usually sit with API configurations, so in your API Definition:
 
 	```
-	circuit_breakers: [
-        {
-          path: "get",
-          method: "GET",
-          threshold_percent: 0.5,
-          samples: 5,
-          return_to_service_after: 60
-        }
-      ]
-     ```
-
-- Circuit breakers are individual on a single host, they do not centralise or pool back-end data, this is for speed. This means that in a load balanced environment where multiple Tyk nodes are used, some traffic can spill through as other nodes reach the sampling rate limit. This is for pure speed, adding a redis counter layer or data-store on every request to a service would just add latency.
-
-- Circuit breakers use a thresh-old-breaker pattern, so of sample size x if y% requests fail, trip the breaker.
-
-- The circuit breaker works across hosts (i.e. if you have multiple targets for an API, the sample is across *all* upstream requests)
-
-- When a circuit breaker trips, it will fire and event: `BreakerTriggered` which you can define actions for in the `event_handlers` section:
-
-	```
-	event_handlers: {
-	    events: {
-	      BreakerTriggered: [
-	        {
-	          handler_name: "eh_log_handler",
-	          handler_meta: {
-	            prefix: "LOG-HANDLER-PREFIX"
-	          }
+	uptime_tests: {
+	    check_list: [
+	      {
+	        "url": "http://google.com:3000/"
+	      },
+	      {
+	        "url": "http://posttestserver.com/post.php?dir=tyk-checker-target-test&beep=boop",
+	        "method": "POST",
+	        "headers": {
+	          "this": "that",
+	          "more": "beans"
 	        },
-	        {
-	          handler_name: "eh_web_hook_handler",
-	          handler_meta: {
-	            method: "POST",
-	            target_path: "http://posttestserver.com/post.php?dir=tyk-event-test",
-	            template_path: "templates/breaker_webhook.json",
-	            header_map: {
-	              "X-Tyk-Test-Header": "Tyk v1.BANANA"
-	            },
-	            event_timeout: 10
-	          }
-	        }
-	      ]
-	    }
+	        "body": "VEhJUyBJUyBBIEJPRFkgT0JKRUNUIFRFWFQNCg0KTW9yZSBzdHVmZiBoZXJl"
+	      }
+	    ]
 	  },
-	```
+	  ```
 
-- Status codes are:
-
-	```
-	// BreakerTripped is sent when a breaker trips
-	BreakerTripped = 0
-
-	// BreakerReset is sent when a breaker resets
-	BreakerReset = 1
-	```
-
-- Added round-robin load balancing support, to enable, set up in the API Definition under the `proxy` section:
+- The body is base64 encoded in the second example, the first example will perform a simple GET, NOTE: using the simplified form will not enforce a timeout, while the more verbose form will fail with a 500ms timeout.
+- Uptime tests can be configured from a service (e.g. etcd or consul), simply set this up in the API Definition (this is etcd):
 
 	```
-	...
-	"enable_load_balancing": true,
-	"target_list": [
-		"http://server1",
-		"http://server2",
-		"http://server3"
-	],
-	...
-	```
-
-- Added REST-based Service discovery for both single and load balanced entries (tested with etcd, but anything that returns JSON should work), to enable add a service discovery section to your Proxy section:
-
-	```
-	// Solo
-	service_discovery : {
-      use_discovery_service: true,
-      query_endpoint: "http://127.0.0.1:4001/v2/keys/services/single",
-      use_nested_query: true,
-      parent_data_path: "node.value",
-      data_path: "hostname",
-      port_data_path: "port",
-      use_target_list: false,
-      cache_timeout: 10
-    },
-
-
-	// With LB
-	"enable_load_balancing": true,
-	service_discovery: {
-      use_discovery_service: true,
-      query_endpoint: "http://127.0.0.1:4001/v2/keys/services/multiobj",
-      use_nested_query: true,
-      parent_data_path: "node.value",
-      data_path: "array.hostname",
-      port_data_path: "array.port",
-      use_target_list: true,
-      cache_timeout: 10
-    },
-    ```
-
-- For service discovery, multiple assumptions are made:
-	- The response data is in JSON
-	- The response data can have a nested value set that will be an encoded JSON string, e.g. from etcd:
-
-	```
-	$ curl -L http://127.0.0.1:4001/v2/keys/services/solo
-
-	{
-	    "action": "get",
-	    "node": {
-	        "key": "/services/single",
-	        "value": "{\"hostname\": \"http://httpbin.org\", \"port\": \"80\"}",
-	        "modifiedIndex": 6,
-	        "createdIndex": 6
+	"uptime_tests": {
+	    "check_list": [],
+	    "config": {
+	      "recheck_wait": 12,
+	      "service_discovery": {
+	        "use_discovery_service": true,
+	        "query_endpoint": "http://127.0.0.1:4001/v2/keys/uptimeTest",
+	        "data_path": "node.value"
+	      }
 	    }
-	}
+	},
 	```
-
-	```
-	$ curl -L http://127.0.0.1:4001/v2/keys/services/multiobj
-
-	{
-	    "action": "get",
-	    "node": {
-	        "key": "/services/multiobj",
-	        "value": "{\"array\":[{\"hostname\": \"http://httpbin.org\", \"port\": \"80\"},{\"hostname\": \"http://httpbin.org\", \"port\": \"80\"}]}",
-	        "modifiedIndex": 9,
-	        "createdIndex": 9
-	    }
-	}
-	```
-
-	Here the key value is actually an encoded JSON string, which needs to be decoded separately to get to the data.
-
-	- In some cases port data will be separate from host data, if you specify a `port_data_path`, the values will be zipped together and concatenated into a valid proxy string.
-	- If use_target_list is enabled, then enable_load_balancing must also be enabled, as Tyk will treat the list as a target list.
-	- The nested data object in a service registry key MUST be a JSON Object, **not just an Array**.
-
-
-- Fixed bug where version parameter on POST requests would empty request body, streamlined request copies in general.
-- it is now possible to use JSVM middleware on Open (Keyless) APIs
-- It is now possible to configure the timeout parameters around the http server in the tyk.conf file:
+- Uptime tests by service discovery will load initially from the endpoint, it will not re-poll the service until it detects an error, at which point it will schedule a reload of the endpoint data. If used in conjunction with upstream target service discovery it enables dynamic reconfiguring (and monitoring) of services.
+- The document that Tyk requires is a JSON string encoded version of the `check_list` parameter of the `uptime_tests` field, for etcd:
 
 	```
-	"http_server_options": {
-        "override_defaults": true,
-        "read_timeout": 10,
-        "write_timeout": 10
-    }
-    ```
+	curl -L http://127.0.0.1:4001/v2/keys/uptimeTest -XPUT -d value='[{"url": "http://domain.com:3000/"}]'
+	```
 
- - It is now possible to set hard timeouts on a path-by-path basis, e.g. if you have a long-running microservice, but do not want to hold up a dependent client should a query take too long, you can enforce a timeout for that path so the requesting client is not held up forever (or manage it's own timeout). To do so, add this to the extended_paths section of your API definition:
+- Fixed a bug where incorrect version data would be recorded in analytics for APis that use the first URL parameter as the version (domain.com/v1/blah)
+- Added domain name support (removes requirement for host manager). The main Tyk instance can have a hostname (e.g. apis.domain.com), and API Definitions can support their own domains (e.g. mycoolservice.com), multiple API definitions can have the same domain name so long as their listen_paths do not clash (so you can API 1 on mycoolservice.com/api1 and API 2 on mycoolservice.com/api2 if you set the listen_path for API 1 and API2 respectively.)
+- Domains are loaded dynamically and strictly matched, so if calls for a listen path or API ID on the main tyk hostname will not work for APIs that have custom domain names set, this means services can be nicely segregated.
+- If the hostname is blank, then the router is open and anything will be matched (if you are using host manager, this is the option you want as it leaves domain routing up to NginX downstream)
+- Set up the main tyk instance hostname by adding `"hostname": "domain.com"` to the config
+- Enable custom api-specific domains by setting `enable_custome_domains` in the tyk.conf to true
+- Make an API use a custom domain by adding a `domain` element to the root object
+- Custom domains will work with your SSL certs
+- Refactored API loader so that it used pointers all the way down, this lessens the amount of data that needs copying in RAM (will only really affect systems running 500+ APIs)
+- JSVM is now disabled by default, if you are not using JS middleware, you can reduce Tyk footprint significantly by not enabling it. To re-enable set `"enable_jsvm": true` in tyk.conf
+- Fixed CORS so that if OPTIONS passthrough is enabled an upstream server can handle all pre-flight requests without any Tyk middleware intervening
+- Dashboard config requires a home_dir field in order to work outside of it's home dir
+- Added option to segragate control API from front-end, set `enable_api_segregation` to true and then add the hostname to `control_api_hostname`
 
- 	```
-	 ...
-	 extended_paths: {
-          ...
-          transform_response_headers: [],
-          hard_timeouts: [
-            {
-              path: "delay/5",
-              method: "GET",
-              timeout: 3
-            }
-          ]
-    }
-    ...
-    ```
+
+

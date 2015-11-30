@@ -46,38 +46,7 @@ Finally, any new definitions are not made live, they do not get loaded into the 
     Pragma: no-cache
     Cache-Control: no-cache
 
-    {
-        "name": "Quickstart test",
-        "api_id": "987654321",
-        "org_id": "default",
-        "definition": {
-            "location": "",
-            "key": ""
-        },
-        "use_keyless": true,
-        "auth": {
-            "auth_header_name": ""
-        },
-        "version_data": {
-            "not_versioned": true,
-            "versions": {
-                "Default": {
-                    "name": "Default",
-                    "expires": "3000-01-02 15:04",
-                    "paths": {
-                        "ignored": [],
-                        "white_list": [],
-                        "black_list": []
-                    }
-                }
-            }
-        },
-        "proxy": {
-            "listen_path": "/quickstart/",
-            "target_url": "http://httpbin.org/",
-            "strip_listen_path": true
-        }
-    }
+{{% content link="/v1.9/object_examples/api_definition/" view="fragment" %}}
 
 #### Sample Response
 
@@ -113,38 +82,7 @@ need to be called to push the new definition to live.
     Pragma: no-cache
     Cache-Control: no-cache
 
-    {
-        "name": "Quickstart test",
-        "api_id": "987654321",
-        "org_id": "default",
-        "definition": {
-            "location": "",
-            "key": ""
-        },
-        "use_keyless": true,
-        "auth": {
-            "auth_header_name": ""
-        },
-        "version_data": {
-            "not_versioned": true,
-            "versions": {
-                "Default": {
-                    "name": "Default",
-                    "expires": "3000-01-02 15:04",
-                    "paths": {
-                        "ignored": [],
-                        "white_list": [],
-                        "black_list": []
-                    }
-                }
-            }
-        },
-        "proxy": {
-            "listen_path": "/quickstart/",
-            "target_url": "http://httpbin.org/",
-            "strip_listen_path": true
-        }
-    }
+{{% content link="/v1.9/object_examples/api_definition/" view="fragment" %}}
 
 #### Sample Response
 

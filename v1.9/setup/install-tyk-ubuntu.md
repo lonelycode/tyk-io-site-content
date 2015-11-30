@@ -4,7 +4,7 @@ title = "Install Tyk on Ubuntu"
 date = 2014-07-29T10:54:19Z
 [menu.sidebar_v1_9]
     parent = "setup"
-    weight = -300
+    weight = -550
 +++
 
 Tyk has it's own APT repositories hosted by the kind folks at [packagecloud.io](https://packagecloud.io), which makes it easy, safe and secure to install a trusted distribution of the Tyk Gateway stack.
@@ -110,14 +110,14 @@ What we have done here is:
 - `--tyk_api_hostname=$HOSTNAME` - Tyk Dashboard has no idea what hostname has been given to Tyk, so we need to tell it, in this instance we are just using the local HOSTNAME env variable, but you could set this to the public-hostname/IP of the instance
 - `--tyk_node_hostname=http://localhost` - Tyk Dashboard needs to see a Tyk node in order to create new tokens, so we need to tell it where we can find one, in this case, use the one installed locally
 - `--tyk_node_port=8080` Tell the dashboard that the Tyk node it should communicate with is on port 8080
-- `--portal_root=/` - We want the portal to be shown on the root of whichever domain we set for the portal
+- `--portal_root=/portal` - We want the portal to be shown on /portal of whichever domain we set for the portal
 
-5. Start Tyk and Tyk dashboard:
+### 5. Start Tyk and Tyk dashboard:
 
 		sudo service tyk-gateway start
 		sudo service tyk-dashboard start
 
-6. Bootstrap the dashboard with an initial user and organisation:
+### 6. Bootstrap the dashboard with an initial user and organisation:
 
 When Tyk Dashboard is created for the first time, it has no initial user base or organisation to add data to, so we need to add this.
 

@@ -8,11 +8,9 @@ date = 2014-07-29T09:31:36Z
 
 Tyk defines a series of 'lists' that a path can belong to, these lists are very high-level structures taht help you block access or exclude paths from specific API configurations. The list options for the Tyk dashboard can be enabled from the Endpoint Designer in the API Detail view.
 
-![Lists - list options](/imgs/lists.png)
-
 ### White List
 
-Items that are checked as "white list" cause the entire API to become white-listed, this means any non-specified routes will be vblocked, and only those listed in the endpoint designer will be allowed throguh. This is great if you wish to have very select access rules for your services.
+Items that are checked as "white list" cause the entire API to become white-listed, this means any non-specified routes will be blocked, and only those listed in the endpoint designer will be allowed through. This is great if you wish to have very select access rules for your services.
 
 ### Black List
 
@@ -20,7 +18,7 @@ Adding a path to a black list will force it to be blocked. This can be useful if
 
 ### Ignored
 
-Adding a path to the ignored list means that the path will not be processed for authentication data. This can be very useful if you have a non-secure endpoint (such as a health-check, or ping) that you don;t need secured.
+Adding a path to the ignored list means that the path will not be processed for authentication data. This can be very useful if you have a non-secure endpoint (such as a health-check, or ping) that you don't need secured.
 
 ### Cache
 

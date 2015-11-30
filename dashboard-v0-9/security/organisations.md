@@ -15,6 +15,6 @@ The concept of an organisation is important to remember when working with users 
 
 To add a new organisation via the command line, simply start the analytics application with the `--neworg` flag. Then follow the instructions on screen.
 
-**Note:** due to a known bug, multi-ork organisation names are NOT supported, if you want to enter a multi-word Organisation name, please remember to enclose it in quotation marks: `"`.
+**Note:** due to a known bug, multi-word organisation names are NOT supported, if you want to enter a multi-word Organisation name, please remember to enclose it in quotation marks: `"`.
 
 

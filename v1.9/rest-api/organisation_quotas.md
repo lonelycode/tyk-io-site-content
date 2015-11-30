@@ -45,13 +45,7 @@ This reset quota mechanism is in place to allow a manual initialisation of the r
     x-tyk-authorization: 352d20ee67be67f6340b4c0605b044bc4
     Cache-Control: no-cache
     
-    {
-        "quota_max": 60,
-        "quota_renews": 1406121006,
-        "quota_remaining": 0,
-        "quota_renewal_rate": 60,
-        "org_id": "53ac07777cbb8c2d53000002"
-    }
+{{% content link="/v1.9/object_examples/org_session/" view="fragment" %}}
 
 #### Sample response
 
@@ -87,14 +81,7 @@ This reset quota mechanism is in place to allow a manual initialisation of the r
     x-tyk-authorization: 352d20ee67be67f6340b4c0605b044bc4
     Cache-Control: no-cache
     
-    {
-        "quota_max": -1,
-        "quota_renews": 1406121006,
-        "quota_remaining": 0,
-        "quota_renewal_rate": 60,
-        "org_id": "53ac07777cbb8c2d53000002"
-        "is_inactive": false
-    }
+{{% content link="/v1.9/object_examples/org_session/" view="fragment" %}}
 
 #### Sample response
 

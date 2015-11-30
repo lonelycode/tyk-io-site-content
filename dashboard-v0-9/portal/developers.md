@@ -11,7 +11,7 @@ Users that are signed up to your portal as called "Developers" in Tyk parlance, 
 dashboard page which show them their API usage over the past 7 days as well as the policy and quota limits
 on their relevant keys.
 
-Develoeprs can sign up to multiple APIs using the APi catalogue, only logged in users are allowed to access 
+Developers can sign up to multiple APIs using the APi catalogue, only logged in users are allowed to access 
 this section of the site.
 
 Developer accounts belong to an organisation ID, so accounts cannot be shared across organisations in a Tyk

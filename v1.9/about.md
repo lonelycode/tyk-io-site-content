@@ -23,7 +23,7 @@ Tyk goes a step further in that it enables you to on-board developers through a 
 Tyk offers powerful, yet lightweight features that allow fine gained control over your API ecosystem.
 
 * **RESTful API** - Full programatic access to the internals makes it easy to manage your API users, keys and Api Configuration from within your systems
-* **Multiple access protocols** - Out of the box, Tyk supports Token-based, HMAC, Basic Auth, OAuth2 and Keyless access methods
+* **Multiple access protocols** - Out of the box, Tyk supports Token-based, HMAC, Basic Auth, OAuth2, JSON Web Token and Keyless access methods
 * **Rate Limiting** - Easily rate limit your API users, rate limiting is granular and can be applied on a per-key basis
 * **Quotas** - Enforce usage quotas on users to manage capacity or charge for tiered access
 * **Granular Access Control** - Grant API access on a version by version basis, grant keys access to multiple APIs or just a single version
@@ -36,6 +36,7 @@ Tyk offers powerful, yet lightweight features that allow fine gained control ove
 * **Zero downtime restarts** - Tyk configurations can be altered dynamically and the service restarted without affecting any active request
 * **Web hooks** - easily integrate notifications, and events into your existing infrastructure for better monitoring
 * **IP White-listing** - Grant access to only machines that you specify
+* **Size Limits** Limit the size of requests coming into your API to ensure that your services don't get flooded
 * **Batch requests** - Enable batch request processing for your API clients to minimise calls they need to make to your API, both synchronous and asynchronous supported.
 * **Health checks** - Easily query your Tyk nodes to see how your APIs are performing
 * **Mock APIs** - Create mock APIs easily using extended path management
@@ -51,6 +52,8 @@ Tyk offers powerful, yet lightweight features that allow fine gained control ove
 * **Virtual Endpoints** Like AWS Lambda functions, you can run JavaScript snippets on endpoints to handle complex service interactions such as request batching.
 * **Focus on microservices** Use circuit breaker patterns, hard timeouts, and round-robin load balancing to get the most out of your services
 * **Service Discovery Support** Using [Etcd](https://github.com/coreos/etcd) or [Eureka](https://github.com/Netflix/eureka)? If your service discovery platform exposes a rest endpoint for your microservices, Tyk can consume it and dynamically reconfigure itself
+* **Uptime Awareness** Tyk can actively poll your API endpoints and notify you when there is downtime using our built-in events system, webhooks or custom JavaScript scripting.
+* **Uptime Analytics** Want to see how your services are holding up over time? Alongside our detailed API usage analytics, you can use our dashboard to view the uptime of your various endpoints and services over time, with detailed error breakdowns by API and version.
 
 Tyk is written in Go, which makes it fast and easy to set up. It's only dependencies are Redis,
 and a MongoDB database (**v2.6 or higher required for analytics**, optional).

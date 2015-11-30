@@ -3,7 +3,7 @@ draft = false
 title = "Tyk Overview"
 date = 2014-07-29T09:31:36Z
 [menu.sidebar_v1_9]
-    weight = -300
+    weight = -305
 
 +++
 
@@ -30,8 +30,10 @@ the gateway APi can do, but offers a better integration point for internal teams
 The Dashboard also acts as the server for the Tyk API Portal, each organisation configured in the dashboard has it's own
 portal, and can publish it's APIs to that portal to enable the documentation and on-boarding workflow.
 
-The Tyk Host Manager
---------------------
+The Tyk Host Manager [defunct]
+------------------------------
+
+*As of version 1.9 the host manager is not required to handle domains and URL routing with Tyk. These features are now internalised as part of the Tyk Gateway and Dashboard applications.*
 
 The host manager acts as a bridge between the Tyk gateway and your webserver, it is specialised on NGinX and can do two things:
 

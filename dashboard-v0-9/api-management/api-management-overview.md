@@ -13,4 +13,6 @@ The API Designer is structured into multiple panels, each corresponding to an el
 
 The API designer also features a path editor, which will let you manage all of the various feature options such as caching, white-listing, hard-timeouts and circuit breakers. In fact, for any given path this is where the most work would be done.
 
-The advanced options tab gives access to the more unique settings and fine-grained control over the API confinguration such as Cachings, CORS and API segmentation.
+The advanced options tab gives access to the more unique settings and fine-grained control over the API configuration such as Caching, CORS and API segmentation.
+
+It is also possible to export an API Definition from the dashboard using the "Export" button, this will download the API as a JSON document so that you can use the API Definition in a file-based Tyk node.

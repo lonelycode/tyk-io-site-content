@@ -7,14 +7,14 @@ date = 2014-07-29T09:31:36Z
     weight = -440
 +++
 
-Getting started with the portal requires only one thing: a working subdomain
+Getting started with the portal requires only one thing: a working sub-domain
 
-The default Tyk portal tempaltes expect to be access from a URL that looks like this: `somedomain.com/portal`, this is 
+The default Tyk portal templates expect to be access from a URL that looks like this: `somedomain.com/portal`, this is 
 because the root URL is reserved for the dashboard login. this isn't ideal, and may be something we change in a later
 version.
 
 However, given this requirement, we have included a sample portal nginx configuration with the host manager which shows 
-which directories need to be exposed and how URL reqrites should be enforced, here is the site configuration te plate:
+which directories need to be exposed and how URL rewrites should be enforced, here is the site configuration te plate:
 
 	server {
         server_name yoursub.domain.com;
@@ -57,8 +57,7 @@ which directories need to be exposed and how URL reqrites should be enforced, he
 	}
 
 As you can see from above, we are rewriting `/portal` to the overlong and complex `/{{.OrgId}}/portal/`, this is because
-all portals from a daashboard instance are exposed as a sub-directory for each organisation, basically you get
-one portal per org.
+all portals from a dashboard instance are exposed as a sub-directory for each organisation, basically you get one portal per org.
 
 The upstream proxy looks like this:
 
@@ -72,7 +71,4 @@ can only be accessed via the direct URL and port.
 The easiest way to get this started, if you are using our vagrant setup guide, is to modify your localhost file to create
 a fake domain to point at the vagrant instance, and then configure NginX on the vagrant box appropriately.
 
-Once you have set up the subdomain and tyk and the dashboard are both running, you should be able to navigate to the URL
-you've created and see thed default home screen layout:
-
-![Tyk Portal - Home](/imgs/portal-home.png)
+Once you have set up the sub-domain and tyk and the dashboard are both running, you should be able to navigate to the URL you've created and see the default home screen layout:

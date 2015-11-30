@@ -81,6 +81,26 @@ To use this in your header transform, your API definition path would be:
         },
     ]
 
+### Injecting and Removing headers globally
+
+In some cases you may wish to add a secure header to all outbound requests (e.g. to verify that traffic is coming from the gateway), to do so, add this to your version block:
+
+    "version_data": {
+        "versions": {
+          "Default": {
+            ...
+            "global_headers": {
+                "x-header-name": "x-header-value"
+            },
+            "global_headers_remove": [
+                "auth_id"
+            ]
+            ...
+          }
+        }
+    },
+
+Using the `global_headers_remove` field it is possible to remove headers from all inbound requests before they are passed to your service.
 
 ### Modifying body data
 

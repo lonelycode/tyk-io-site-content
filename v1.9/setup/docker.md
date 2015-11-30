@@ -7,119 +7,78 @@ date = 2014-07-29T10:54:19Z
     weight = -600
 +++
 
-The fastest way to get started with Tyk and all of it's components is with Docker. So we recommend you follow the [instructions on installing docker](https://docs.docker.com/installation/) if you don't have it already.
+Getting started with Tyk and Docker is very quick, we have set up a Docker Compose configuration that will get you up and running with a few commands. To get started with his tutorial, make sure you have both Docker and Docker Compose installed on your machine.
 
-## Step 1 - Set up some hosts entries
+What we will do in this setup guide is build the entire stack (The gateway and the dashboard) in one go. 
 
-If you are using linux, you should be able to access your docker containers on 127.0.0.1, but for OSX users, your Docker instances will be in a VM and most likely have a different IP address. It's important to know what your Docker instance IP address is because you'll need it now.
+The way the Tyk docker images are set up is:
 
-Edit your `/etc/hosts` file and add the following lines:
+- Tyk Gateway container: This is a stand-alone container for the tyk gateway that manages your traffic
+- Tyk Dashboard container: This is your dashboard and your portal
 
-	127.0.0.1 	testorg.tyk.docker
-	127.0.0.1 	test-api.testorg.tyk.docker
+In older version of tyk, there would be a  third container, called Tyk Host manager, this would be managing and NginX instance to make portal and domain routing easier.
 
-You can also do this with [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html) if you have it configured (set it up to handle the .docker domain), but this way will work for the demo. Note for OSX users the IP address would be to your Docker instance
+With this version of Tyk, domain handling is built into the main stack and no additional components are required to route to your portal except setting the domain name when you initialise your organisation.
 
-The reason we need these two entries is because `testorg.tyk.docker` will eventually point at your portal and `test-api.testorg.docker` will point at your first proxied API.
+## Working with docker
 
-## Step 2 - Run the setup script
+In order for everything to work in a single docker instance, assuming everything is on a single server, we will want all traffic to go through port 80, even though the dashboard runs on port 3000 and the gateway on port 8080.
 
-The setup script works with docker and [docker-compose](https://docs.docker.com/compose/install/), you will need both running for this wto work. [OS X users should check out the Docker toolbox](https://www.docker.com/toolbox) as it contains everything you need.
+**How we do this is:**
 
-In a shel that can see your docker instance, run:
+1. We set up a DNS instance in the docker compose container group, this will ensure we have two-way routing between the gateway and the dashboard images (if you don;t link your containers you won;t need this)
+2. Run the Tyk Gateway so it can accept traffic on port 8080, but expose port 80 and map that so 80->8080
+3. We override the tyk.conf file in the Tyk Gateway container with one that is specifically set up for this tutorial
+3. Run the Tyk Dashboard on port 3000 and expose port 3000 (so you can see the dashboard)
+4. Override the tyk_analytics.conf file with one that is specifically for a docker setup)
+5. Run a setup script that will:
+
+	- Create an organisation for you
+	- Create a new user so you can log into the dashboard
+	- Add three APIs to the gateway that proxy to your new organisations' portal, portal assets and public API
+	
+The last point is important, because we are not using nginx to route traffic into the container group, we need some way of multiplexing the site on port 80. We do this by using the Tyk Gateway to do this for us (the same way NginX used to).
+
+### Step 1. Set up some hosts entries
+
+We are assuming that you are running this on a local docker installation, the Tyk Portal requires a domain name to bind to in order to work properly, so lets make sure we set those up:
+
+	127.0.0.1    tyk_dashboard._tyk_dashboard.docker
+	127.0.0.1    www.tyk-portal-test.com
+
+The first entry will give us an easy way to address the dashboard, and the second will be used to access our portal.
+
+### Step 2. Get the quick start compose files
+
+Our quick start is a github repository that contains everything you need to start Tyk, let's clone it locally:
 
 	git clone git@github.com:lonelycode/tyk_quickstart.git
 	cd tyk_quickstart
-	docker-compose up -d tyk_nginx
-	./setup.sh
+	
+### Step 3. Bootstrap your dashboard and portal
 
-## Step 3 - Log in
+We've included a setup script that will create an organisation, a user and create the proxy configurations for your portal for you:
 
-Use the credentials given to you by the script to log into the dashboard. Congratulatons! Tyk is now up and
-running on your machine :-)
+	./setup.sh tyk_dashboard.tyk_dashboard.docker www.tyk-portal-test.com
 
-But it doesn't mean much if you actually want to test-drive all the features, so lets set up a portal and manage a basic API...
+### Step 4. Log in
 
-## Step 4 - Create a Portal and your first API
+The setup script will provide login details for your dashboard - go ahead and log in.
 
-By default there is no portal configured, you need to configure it by visiting the portal settings screen, even if you don't want to change the option. Simply click on "Settings", the notification view on the right will say that no configuration was detected so it was created. Your portal won't work without this step, so it's important.
+#### One last thing for your portal:
 
-That's it, now you need to create the home page
+The setup script will automatically create locally routed proxies for the dashboard (so that your docker container can serve both APIs and your portal from Port 80). In a traditional setup without docker, internal networking allows us to use `localhost` to refer to the upstream dashboard as in the proxy, however in docker, we need to route around a local DNS.
 
-### Create the home page
+This means the fixtures we use to set up the portal routes for an organisation to be proxied by the gateway ned to be modified for docker, this is pretty easy:
 
-Go to "Pages" and Add a new page, give it any title you like (e.g. "Welcome") and then, at the bottom of the page, select "Make this page the home page"
 
-Save the page.
+- Go to the APIs section
+- In each API that is greyed out, edit it and replace `localhost` in the Target URL with `tyk_dashboard.tyk_dashboard.docker`
+- Save each API
 
-### Create an API
+If you wish to change your portal domain - **DO NOT USE** the drop-down option in the navigation, instead, change the domain names in the three site entries in the API section. However, if you want clean URLs constructed for your APIs in the dashboard, setting this value will show the URLs for your APIs as relative to the domain you've set.
 
-Go to the "APIs" section, and select the green button to create a new API, Change the following fields:
+## Next Steps
 
-1. API Name: `HttpBin`
-2. Target: `http://httpbin.org`
-3. Advanced Options -> API Slug: `test-api`
-
-Save the API.
-
-### Create a Policy
-
-Under the Policies menu item, select "New Policy", you can leave all the defaults as is, except:
-
-1. Name the policy "Default"
-2. Select the "HttpBin" API in the access control section and click "Add" so it appears in the list
-3. Check the box that says "Make this policy active"
-
-Save the policy by clicking the "Create" button.
-
-### Publish the API to the portal
-
-The API that you defined earlier is active and will work, however you don't have a key yet, you could manually create one in the "Keys" section, but it's better to use the portal flow to get your API key as a new developer.
-
-Not all APIs are visible to the portal, only the ones you tell it about, so under the "Catalogue" section, select "Add API", on the screen that appears, then:
-
-1. Select your "Default" policy
-2. Fill in the description fields
-3. Ensure the "Enable this API" checkbox is checked
-
-Save the API Catalogue entry by clicking the "Update" button.
-
-## Try out the gateway and portal
-
-If all has worked, you should be able to browse to http://testorg.tyk.docker:8888/portal/ (or just click the "Your portal" link in the dashboard) and see the portal home page. You should also be able to sign up, log in and enroll for the HttpBin API.
-
-Once you have enrolled for an API, you'll be given an auth token, you can try it out like this:
-
-**Test Request**
-
-	$ curl --header "authorization: {YOUR KEY}" http://test-api.testorg.tyk.docker:8888/get
-
-Or you can use the directory-based URL format:
-
-**Alternative test request:**
-
-	$ curl --header "authorization: {YOUR KEY}" http://testorg.tyk.docker:8888/test-api/get
-
-**Sample Response**
-
-	{
-	  "args": {},
-	  "headers": {
-	    "Accept": "*/*",
-	    "Accept-Encoding": "gzip",
-	    "Authorization": "xxxxxxxxxxxxxxxxxxxxx",
-	    "Host": "httpbin.org",
-	    "User-Agent": "curl/7.37.1",
-	    "X-Scheme": "http"
-	  },
-	  "origin": "xxx.xxx.xxx.xxx, xxx.xxx.xxx.xxx",
-	  "url": "http://httpbin.org/get"
-	}
-
-That's it! You can now experiment with the various transforms, options and methods.
-
-**Note:** For debugging purposes, it may be worth attaching to the dashboard and gateway containers so you can see the log output.
-
-### The "Your Portal" link isn't working
-
-Tyk tries to guess the right IP address for the portal and the Tyk gateway instance, however this is usually not what you want. The way to set this correctly is to add a `hostname` entry in the `tyk_analytics.conf` file. For the demo, if you have set up `tyk.docker` to point at your docker host then all should work.
+- [Set up and test your first API](../set-up-first-api/)
+- [Set up your portal and publish your first API](../set-up-portal-api/)

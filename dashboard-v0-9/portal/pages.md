@@ -7,12 +7,12 @@ date = 2014-07-29T09:31:36Z
     weight = -240
 +++
 
-Tyk pages are rudimentary, single-slug HTML pages that can be rendered to the portal, the tempalte for each page is by
+Tyk pages are rudimentary, single-slug HTML pages that can be rendered to the portal, the template for each page is by
 default in `portal/templates/page.html`, though others can be used by registering a new template code with the template file
 using the `{{ define "newPageCode" }}` directive and reloading the dashboard instance.
 
 All pages by default expose a `{{.Title}}` field along with any custom field name you create in the pages editor. Fields that
-are created in the apge editor can be accessed using the same dot-notation as the title field and are sub-fields of the 
+are created in the page editor can be accessed using the same dot-notation as the title field and are sub-fields of the 
 `Fields` section.
 
 For example, to expose a field called `"MainBody"`, we can access it like so:
@@ -25,7 +25,7 @@ For example, to expose a field called `"MainBody"`, we can access it like so:
 
 ### Markdown
 
-As you can see from the above snipped, the piped `| markDown` operator will try to render the content as markdown, this can be
+As you can see from the above snippet, the piped `| markDown` operator will try to render the content as markdown, this can be
 very helpful for generating content without having to add custom markup into the raw content.
 
 

@@ -3,12 +3,10 @@ draft = false
 title = "Working with NGinX"
 date = 2014-07-29T10:59:33Z
 [menu.sidebar_v1_9]
-    parent = "setup"
+    parent = "configuration"
 +++
 
-The recommended deployment of Tyk to production is behind NGinX as an upstream proxy. Tyk is itself a reverse proxy and
-therefore simply filters the traffic already passed through the web server, running behind something like NGinX makes it
-easy for you to route traffic and load balance multiple Tyk instances to gain optimal performance.
+**As of version 1.9 Tyk no longer requires NginX and the Tyk Host Manager to work** However, the Tyk host manager is still bundled with Tyk Dashboard and Tyk will continue to work with the host manager, but requires manual installation and configuration.
 
 An example configuration is shown below:
 
@@ -89,10 +87,3 @@ Tyk instances.
 This should ensure that you can present a clean API front-end to your users, without having to worry about API ID's, listen paths or
 ugly gateway URL's, if you wanted to, you could plumb Tyk into your existing architecture without changing your current endpoints
 (assuming you are using NGinX, of course).
-
-### A note on instances
-
-Tyk is written in Golang, which unfortunately has some difficulties being daemonised in the same way as regular unix processes, this means
-running them with Upstart can be an issue. We have found that launching multiple processes using something like [supervisord](http://supervisord.org/) works well,
-especially considering that loading new configurations into Tyk can be done without a restart and without downtime. The only time a restart
-is required is to re-load the base `tyk.conf` file, which should not occur often.

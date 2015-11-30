@@ -34,7 +34,7 @@ By default Tyk will automatically generate a key for your developer for APIs tha
 to the API catalogue. If you would rather the developer waits for you to approve the key, then enable
 this option. 
 
-You can find all key rewuests in the "Key requests" section of the dashboard.
+You can find all key requests in the "Key requests" section of the dashboard.
 
 #### Redirect key requests
 
@@ -43,11 +43,11 @@ enrollment form with a different system, enable this option and set the appropri
 
 ### Signup form customisation
 
-If you wish develoeprs to submit additional details as part of their signup form, you can register the 
+If you wish developers to submit additional details as part of their signup form, you can register the 
 field names here, then add them to the form in the sign-up template (they will not be validated, we leave
 this up to you) and they will be stored in the database alongside the user profile.
 
-These fields will also be exposed in the developer profiles secion in the dashboard so you can view them
+These fields will also be exposed in the developer profiles section in the dashboard so you can view them
 at any time.
 
 ### Key request form customisation
@@ -55,7 +55,7 @@ at any time.
 Similarly to the signup form customisation, you can set the field names to store as part of a key request,
 e.g. "Why do you want access to this API?" etc.).
 
-Again these keys will need ot be maually exposed as form fields in the template for the processor to store them
+Again these keys will need to be manually exposed as form fields in the template for the processor to store them
 correctly.
 
 ### Customised email

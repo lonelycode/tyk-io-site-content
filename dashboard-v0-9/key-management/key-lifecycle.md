@@ -7,7 +7,7 @@ date = 2014-07-29T09:31:36Z
     parent="key-management"
 +++
 
-Core to managing your APIs is the ability to onboard developers and to migrate through various service tiers.
+Core to managing your APIs is the ability to on-board developers and to migrate through various service tiers.
 
 For example, you may have developers sign up to a free-tier of access to your underlying API, but a few months later, their requirements outgrow the tier they have enrolled in and demand more access.
 
