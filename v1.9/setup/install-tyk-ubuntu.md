@@ -133,7 +133,7 @@ You will now be able to log into and test your Tyk instance with the values give
 
 ## Next Steps
 
-- [Set up and test your first API](../set-up-first-api/)
-- [Set up your portal and publish your first API](../set-up-portal-api/)
+- [Set up and test your first API](../../tutorial/set-up-first-api/)
+- [Set up your portal and publish your first API](../../tutorial/set-up-portal-api/)
 
 

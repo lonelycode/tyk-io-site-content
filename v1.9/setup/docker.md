@@ -76,9 +76,11 @@ This means the fixtures we use to set up the portal routes for an organisation t
 - In each API that is greyed out, edit it and replace `localhost` in the Target URL with `tyk_dashboard.tyk_dashboard.docker`
 - Save each API
 
-If you wish to change your portal domain - **DO NOT USE** the drop-down option in the navigation, instead, change the domain names in the three site entries in the API section. However, if you want clean URLs constructed for your APIs in the dashboard, setting this value will show the URLs for your APIs as relative to the domain you've set.
+If you wish to change your portal domain - **DO NOT USE** the drop-down option in the navigation, instead, change the domain names in the three site entries in the API section. 
+
+However, if you want clean URLs constructed for your APIs in the dashboard, setting this value will show the URLs for your APIs as relative to the domain you've set.
 
 ## Next Steps
 
-- [Set up and test your first API](../set-up-first-api/)
-- [Set up your portal and publish your first API](../set-up-portal-api/)
+- [Set up and test your first API](../../tutorial/set-up-first-api/)
+- [Set up your portal and publish your first API](../../tutorial/set-up-portal-api/)

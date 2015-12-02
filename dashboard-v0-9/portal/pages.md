@@ -28,4 +28,18 @@ For example, to expose a field called `"MainBody"`, we can access it like so:
 As you can see from the above snippet, the piped `| markDown` operator will try to render the content as markdown, this can be
 very helpful for generating content without having to add custom markup into the raw content.
 
+### Custom pages and URLs
 
+When you create a new page, no matter what template is being used, the URL is always relative to `/portal` or your portal-root, if you have set this in the `tyk_analytics.conf` file.
+
+So a page with the slug "test-page", would be under "/portal/test-page"
+
+To define which template to use (if not using the defaults), you will need to set it in the "custom page code" section of the page editor. Just use the name that is at the top of the HTML template as defined in the "define" tag, for the home page it's:
+
+	{{ define "indexPage" }}
+
+And for a standard page it's:
+
+	{{ define "portalPage" }}
+
+To load a custom template you will need to restart the dashboard app though to make sure the templates are cached.

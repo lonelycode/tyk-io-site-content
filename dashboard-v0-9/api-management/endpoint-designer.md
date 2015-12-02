@@ -16,11 +16,7 @@ In the case that you want to have specific behaviors applied to a path (for exam
 
 By default, importing an API using Swagger or API Blueprint definitions will generate a white-list.
 
-![API Manager - Endpoint Designer](/imgs/endpoint-designer.png)
-
 To get started, click the "Add Endpoint" button, this will give you an empty path definition:
-
-![API Manager - New path](/imgs/new-path.png)
 
 In a new path definition, you can set multiple options, and if you do not specify a specific action for that list (from the plugins drop-down), then saving the path will actually do nothing (and it will vanish).
 
@@ -32,4 +28,4 @@ The options here are:
 
 ### Versions
 
-At the top of the endpoint designer you can see which version you are currently editing. If you ahve more thanone option, selecting it from the drop-down will load it's endpoint configuration into the editor.
+At the top of the endpoint designer you can see which version you are currently editing. If you ahve more than one option, selecting it from the drop-down will load it's endpoint configuration into the editor.

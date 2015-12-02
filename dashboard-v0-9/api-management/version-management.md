@@ -9,8 +9,6 @@ date = 2014-07-29T09:31:36Z
 
 Tyk enables full version life-cycle management for your APIs, it includes the ability to define different configurations for different versions of an API and have Tyk manage route and middleware configurations on the same listen path of any given API. By default, Tyk expects to find version information in a header key or in a query parameter. **Note:** Tyk does not support path-based version detection.
 
-![API Manager - version settings](/imgs/api-version-settings.png)
-
 Versioning can either be enabled or disabled, if an API is not versioned, a "Default" version is created which can store any path-related data and settings. Versions are set by a unique version name that matches the version tag you use to identify the version in a request, this can either be as a header field or as a parameter.
 
 All versions have an expiry date, set this to empty for the version to never expire. 
