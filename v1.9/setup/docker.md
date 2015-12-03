@@ -54,6 +54,8 @@ Our quick start is a github repository that contains everything you need to star
 
 	git clone git@github.com:lonelycode/tyk_quickstart.git
 	cd tyk_quickstart
+
+**A quick note for those using an older docker client (previous to docker client v1.9.0):** There is another YML file for older clients in the repository, rename this to `docker-compose.yml` for your setup to work.
 	
 ### Step 3. Bootstrap your dashboard and portal
 
