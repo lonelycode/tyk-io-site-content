@@ -43,7 +43,7 @@ The last point is important, because we are not using nginx to route traffic int
 
 We are assuming that you are running this on a local docker installation, the Tyk Portal requires a domain name to bind to in order to work properly, so lets make sure we set those up:
 
-	127.0.0.1    tyk_dashboard._tyk_dashboard.docker
+	127.0.0.1    tyk_dashboard.tyk_dashboard.docker
 	127.0.0.1    www.tyk-portal-test.com
 
 The first entry will give us an easy way to address the dashboard, and the second will be used to access our portal.
