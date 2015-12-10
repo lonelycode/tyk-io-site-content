@@ -41,12 +41,13 @@ The last point is important, because we are not using nginx to route traffic int
 
 ### Step 1. Set up some hosts entries
 
-We are assuming that you are running this on a local docker installation, the Tyk Portal requires a domain name to bind to in order to work properly, so lets make sure we set those up:
+We are assuming that you are running this on a local docker installation, the Tyk Portal requires a domain name to bind to in order to work properly, so lets make sure we set that up:
 
-	127.0.0.1    tyk_dashboard.tyk_dashboard.docker
 	127.0.0.1    www.tyk-portal-test.com
 
-The first entry will give us an easy way to address the dashboard, and the second will be used to access our portal.
+(OSX / Kitematic users should change this to their Docker Host IP Address)
+
+This entry will be used to access our portal.
 
 ### Step 2. Get the quick start compose files
 
@@ -61,7 +62,8 @@ Our quick start is a github repository that contains everything you need to star
 
 We've included a setup script that will create an organisation, a user and create the proxy configurations for your portal for you:
 
-	./setup.sh tyk_dashboard.tyk_dashboard.docker www.tyk-portal-test.com
+	docker-compose up -d
+	./setup.sh 127.0.0.1 www.tyk-portal-test.com
 
 ### Step 4. Log in
 
@@ -71,11 +73,11 @@ The setup script will provide login details for your dashboard - go ahead and lo
 
 The setup script will automatically create locally routed proxies for the dashboard (so that your docker container can serve both APIs and your portal from Port 80). In a traditional setup without docker, internal networking allows us to use `localhost` to refer to the upstream dashboard as in the proxy, however in docker, we need to route around a local DNS.
 
-This means the fixtures we use to set up the portal routes for an organisation to be proxied by the gateway ned to be modified for docker, this is pretty easy:
+This means the fixtures we use to set up the portal routes for an organisation to be proxied by the gateway need to be modified for docker, this is pretty easy:
 
 
 - Go to the APIs section
-- In each API that is greyed out, edit it and replace `localhost` in the Target URL with `tyk_dashboard.tyk_dashboard.docker`
+- In each API that is greyed out, edit it and replace `localhost` in the Target URL with `ambassador_1`
 - Save each API
 
 If you wish to change your portal domain - **DO NOT USE** the drop-down option in the navigation, instead, change the domain names in the three site entries in the API section. 
