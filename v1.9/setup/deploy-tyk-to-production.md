@@ -40,6 +40,25 @@ The network topology we like to use is:
 - A separate Redis server with fail-over or cluster
 - One Tyk dashboard node with it's own local gateway process, this gateway process has purging enabled and is not sharded
 
+### Make srue you have enough Redis connections
+
+Tyk makes heavy use of Redis in order to provide a fast and reliable service, in order to do so effectively, it keeps a passive connection pool ready. For high-performance setups, this pool needs to be expanded to handle more simultaneous connections, otherwise you may run out of redis connections.
+
+Tyk also lets you set a maximum number of open connections, so that you don't over-commit connections to the server.
+
+To set you maximums and minimums, edit your tyk.conf and tyk_analytics.conf files to include:
+	
+	```
+	"storage": {
+        ...
+        "optimisation_max_idle": 2000,
+        "optimisation_max_active": 4000,
+        ...
+    },
+    ```
+
+Set the `max_idle` value to something large, we usually leave it around 2000 for HA deployments, and then set your `max_active` to your upper limit (as in, how many additional connections over the idle pool should be used)
+
 ### Analytics purging and health checks are expensive
 
 In order to keep real-time health-check data and make it available to the Health-check API, Tyk needs to record information for every request, in a rolling window - this is an expensive operation and can limit throughput - you have two options: switch it off, or get a box with more cores.
