@@ -8,7 +8,7 @@ date = 2014-07-29T10:56:22Z
 +++
 
 This is a high-level overview of how APIs are defined in Tyk - for a detailed breakdown of each option in the API definition object, please see the
-[detailed breakdown](/api-management/api-definition-detail/) section of this guide.
+[detailed breakdown](/v1.9/api-management/api-definition-detail/) section of this guide.
 
 Tyk can handle different access scenarios for multiple APIs in a single instance. It does this through the provision of API Definitions, these become handlers for
 a specific root-path (`listen_path` in the configuration) and proxy every request into this root path to an outward host.
@@ -71,7 +71,7 @@ Definition objects have the following structure - not all keys are required:
         }
     }
 
-For full details on how the varying fields in this configuration file work please see the [detailed breakdown](/api-management/api-definition-detail/) section of this guide.
+For full details on how the varying fields in this configuration file work please see the [detailed breakdown](/v1.9/api-management/api-definition-detail/) section of this guide.
 
 ## Hot-configuration reload
 
