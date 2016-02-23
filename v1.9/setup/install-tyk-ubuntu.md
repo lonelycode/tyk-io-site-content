@@ -54,7 +54,7 @@ Now lets add the required repos and update again (notice the `-a` flag in the se
 
 **What we've done here is:**
 
-- Added the Mongo DB repository for the altest version (3.0 as of time of writing)
+- Added the Mongo DB repository for the latest version (3.0 as of time of writing)
 - Added the Tyk Gateway and Tyk Dashboard repositories
 - Updated our package list
 
