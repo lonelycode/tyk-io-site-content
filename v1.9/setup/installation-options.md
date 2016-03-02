@@ -25,7 +25,7 @@ By default, Tyk Gateway and Tyk Dashboard are installed into the `/opt/ director
 
 Manual installation can of course put the application anywhere, with Tyk Dashboard, one caveat is that it must know it's home directory, you can set this by adding a `home_dir` field to the `tyk_analytics.conf`.
 
-To specify a cnofiguration to use with tyk, use the `--conf=filename.conf` parameter.
+To specify a configuration to use with tyk, use the `--conf=filename.conf` parameter.
 
 ### Init scripts
 
