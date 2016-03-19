@@ -110,7 +110,7 @@ date = 2014-07-29T09:31:36Z
         ],
         "pages": 0
     }
-    
+
 ### Retrieve a single API by ID
 
 |   **Property**    |   **Description**              |
@@ -118,7 +118,7 @@ date = 2014-07-29T09:31:36Z
 |   Resource URL    |   `/api/apis/{id}`             |
 |   Method          |   GET                          |
 |   Type            |   None                         |
-|   Body            |   Advanced API Definition      |
+|   Body            |   None                         |
 |   Param           |   None                         |
 
 #### Sample request
@@ -276,7 +276,7 @@ date = 2014-07-29T09:31:36Z
 
 ### Create API Definition
 
-Creating API definitions is slightly differnt to the core API, API definitions are wrapped inside an `api_definition` field and event handlers, such as web hooks ar enot embedded in th main `api_defintion` object (though they can be), webhooks are instead appended as references into the `hook_references` field, the API will embed the correct webhook data into the event handler interface.
+Creating API definitions is slightly different to the core API, API definitions are wrapped inside an `api_definition` field and event handlers, such as web hooks are not embedded in th main `api_defintion` object (though they can be), webhooks are instead appended as references into the `hook_references` field, the API will embed the correct webhook data into the event handler interface.
 
 |   **Property**    |   **Description**              |
 |   -----------     |   ---------------              |
@@ -286,11 +286,12 @@ Creating API definitions is slightly differnt to the core API, API definitions a
 |   Body            |   Advanced API Definition      |
 |   Param           |   None                         |
 
-#### Sample Request: 
+#### Sample Request:
 
     POST /api/apis HTTP/1.1
     Host: localhost:3000
     Connection: keep-alive
+    Content-Type: application/json
     Content-Length: 1356
     authorization: 7a7b140f-2480-4d5a-4e78-24049e3ba7f8
 
@@ -395,7 +396,7 @@ Creating API definitions is slightly differnt to the core API, API definitions a
             }
         ]
     }
-    
+
 #### Sample Response:
 
     {
@@ -417,11 +418,12 @@ APIs that are created using the advanced management API are referenced by their 
 |   Body            |   Advanced API Definition      |
 |   Param           |   None                         |
 
-#### Sample Request: 
+#### Sample Request:
 
     PUT /api/apis/54c24242eba6db1c9a000002 HTTP/1.1
     Host: localhost:3000
     Connection: keep-alive
+    Content-Type: application/json
     Content-Length: 1356
     authorization: 7a7b140f-2480-4d5a-4e78-24049e3ba7f8
 
@@ -528,11 +530,11 @@ APIs that are created using the advanced management API are referenced by their 
             }
         ]
     }
-    
+
 #### Sample Response:
 
     {
         "Status": "OK",
-        "Message": "API created",
+        "Message": "Api updated",
         "Meta": ""
     }

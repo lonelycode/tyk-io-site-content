@@ -13,7 +13,7 @@ A sample use case for this might be aggregate functions that bring together rela
 
 Alternatively you could produce a dynamic response object that transforms or computes data in some way from upstream services.
 
-**Note:** The JavaScript environment that these methods run in is a traditional ECMAScript environment and dos not offer the expressive power of something like nodeJS. These methods are meant to provide a functional interpreter before complex interactions with your underlying service that cannot be handled by one of the other middleware components.
+**Note:** The JavaScript engine that these methods run in is a traditional ECMAScript 5 compatible environment and does not offer the more expressive power of something like nodeJS. These methods are meant to provide a functional interpreter before complex interactions with your underlying service that cannot be handled by one of the other middleware components.
 
 ### Virtual Endpoint Functions
 
@@ -132,7 +132,7 @@ Virtual paths follow the same layout and setup as other elements in the `extende
 
 #### `response_function_name`
 
-This is the function to run, we need to know this as it will be the entrypoint into your code, this will be called first. Make sure it is unique, all plugins run in the same VM, so if there are naming collisions you may end up with unpredictable behaviour.
+This is the function to run when this virtual path is requested. The function name must match exactly (including casing) the function name in your Virtual middleware. We need to know this as it will be the entrypoint into your code, this will be called first. Make sure it is unique, all plugins run in the same VM, so if there are naming collisions you may end up with unpredictable behaviour.
 
 #### `function_source_type`
 
@@ -141,6 +141,14 @@ This can be `file` or `blob` If set to `file`, then Tyk will pre-load the JS fro
 #### `function_source_uri`
 
 This will be the relative path to the source of the functionality (e.g. `myfile.js`), or a blob of base64-encoded data that represents the same information. Blob mode is mainly used by the dashboard to make code injection easier on multiple node deployments.
+
+#### `path`
+
+This is the relative URI path to which the Virtual middleware will respond. For example; http://domain/path
+
+#### `method`
+
+This is the HTTP verb (e.g. `GET`, `POST`, etc.) to which this Virtual middleware will respond.
 
 #### `use_session`
 
