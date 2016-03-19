@@ -9,7 +9,7 @@ date = 2014-07-29T10:54:19Z
 
 Getting started with Tyk and Docker is very quick, we have set up a Docker Compose configuration that will get you up and running with a few commands. To get started with his tutorial, make sure you have both Docker and Docker Compose installed on your machine.
 
-What we will do in this setup guide is build the entire stack (The gateway and the dashboard) in one go. 
+What we will do in this setup guide is build the entire stack (The gateway and the dashboard) in one go.
 
 The way the Tyk docker images are set up is:
 
@@ -36,8 +36,7 @@ In order for everything to work in a single docker instance, assuming everything
 	- Create an organisation for you
 	- Create a new user so you can log into the dashboard
 	- Add three APIs to the gateway that proxy to your new organisations' portal, portal assets and public API
-	
-The last point is important, because we are not using nginx to route traffic into the container group, we need some way of multiplexing the site on port 80. We do this by using the Tyk Gateway to do this for us (the same way NginX used to).
+  - Create a portal home page with some dummy content
 
 ### Step 1. Set up some hosts entries
 
@@ -45,7 +44,7 @@ We are assuming that you are running this on a local docker installation, the Ty
 
 	127.0.0.1    www.tyk-portal-test.com
 
-(OSX / Kitematic users should change this to their Docker Host IP Address)
+OS X or Kitematic users should change this to their Docker Host IP Address, you can find this out by running `docker-machine ip default`.
 
 This entry will be used to access our portal.
 
@@ -57,13 +56,13 @@ Our quick start is a github repository that contains everything you need to star
 	cd tyk_quickstart
 
 **A quick note for those using an older docker client (previous to docker client v1.9.0):** There is another YML file for older clients in the repository, rename this to `docker-compose.yml` for your setup to work.
-	
+
 ### Step 3. Bootstrap your dashboard and portal
 
 We've included a setup script that will create an organisation, a user and create the proxy configurations for your portal for you:
 
 	docker-compose up -d
-	./setup.sh 127.0.0.1 www.tyk-portal-test.com
+	./setup.sh
 
 ### Step 4. Log in
 
@@ -71,16 +70,7 @@ The setup script will provide login details for your dashboard - go ahead and lo
 
 #### One last thing for your portal:
 
-The setup script will automatically create locally routed proxies for the dashboard (so that your docker container can serve both APIs and your portal from Port 80). In a traditional setup without docker, internal networking allows us to use `localhost` to refer to the upstream dashboard as in the proxy, however in docker, we need to route around a local DNS.
-
-This means the fixtures we use to set up the portal routes for an organisation to be proxied by the gateway need to be modified for docker, this is pretty easy:
-
-
-- Go to the APIs section
-- In each API that is greyed out, edit it and replace `localhost` in the Target URL with `ambassador_1`
-- Save each API
-
-If you wish to change your portal domain - **DO NOT USE** the drop-down option in the navigation, instead, change the domain names in the three site entries in the API section. 
+If you wish to change your portal domain - **DO NOT USE** the drop-down option in the navigation, instead, change the domain names in the three site entries in the API section.
 
 However, if you want clean URLs constructed for your APIs in the dashboard, setting this value will show the URLs for your APIs as relative to the domain you've set.
 
