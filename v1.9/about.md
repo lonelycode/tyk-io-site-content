@@ -14,7 +14,7 @@ Tyk is a lightweight, open source API Gateway and Management platform that enabl
 	
 ## What is an API Gateway? ##
 
-An API Gateway sits in front of your application(s) and manages the heavy lifting of authorisation, access control and throughput limiting to your services. Ideally, it should mean that you can focus on creating services instead of implementing management infrastructure. For example if you have written a really awesome web service that provides geolocation data for all the cats in My Account, and you want to make it public, integrating an API gateway is a faster, more secure route that writing your own authorisation middleware.
+An API Gateway sits in front of your application(s) and manages the heavy lifting of authorisation, access control and throughput limiting to your services. Ideally, it should mean that you can focus on creating services instead of implementing management infrastructure. For example if you have written a really awesome web service that provides geolocation data for all the cats in My Account, and you want to make it public, integrating an API gateway is a faster, more secure route than writing your own authorisation middleware.
 
 Tyk goes a step further in that it enables you to on-board developers through a dedicated portal, as well as analyse who uses your APIs and how they use it through a powerful analytics platform.
 
